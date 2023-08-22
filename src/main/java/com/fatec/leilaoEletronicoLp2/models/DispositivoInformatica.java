@@ -9,5 +9,5 @@ public class DispositivoInformatica {
 	private int diId;
 	private String diEnderecoFisico;
 	private String diMarca;
-	private String diProcessador;
+	private String diProcessador; 
 }
