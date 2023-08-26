@@ -1,19 +1,9 @@
-package com.fatec.leilaoEletronicoLp2.models;
+package com.fatec.leilaoEletronicoLp2.dtos;
 
 import java.util.Date;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-
-@Entity
-@Table(name = "LEILAO")
-public class Leilao {
+public class LeilaoDto {
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer leiId;
 	
 	private Date leiDataOcorrencia;
@@ -24,20 +14,22 @@ public class Leilao {
 	
 	private String leiCidade;
 	
-	private String leiEstado;
+	private String leiestado;
 	
 	private String leiEnderecoWeb;
+
 	
 	
 	
-	public Leilao(Date leiDataOcorrencia, Date leiDataVisitacao, String leiEndereco, String leiCidade, String leiEstado,
-			String leiEnderecoWeb) {
+	public LeilaoDto(Integer leiId, Date leiDataOcorrencia, Date leiDataVisitacao, String leiEndereco, String leiCidade,
+			String leiestado, String leiEnderecoWeb) {
 		super();
+		this.leiId = leiId;
 		this.leiDataOcorrencia = leiDataOcorrencia;
 		this.leiDataVisitacao = leiDataVisitacao;
 		this.leiEndereco = leiEndereco;
 		this.leiCidade = leiCidade;
-		this.leiEstado = leiEstado;
+		this.leiestado = leiestado;
 		this.leiEnderecoWeb = leiEnderecoWeb;
 	}
 
@@ -81,12 +73,12 @@ public class Leilao {
 		this.leiCidade = leiCidade;
 	}
 
-	public String getLeiEstado() {
-		return leiEstado;
+	public String getLeiestado() {
+		return leiestado;
 	}
 
-	public void setLeiEstado(String leiEstado) {
-		this.leiEstado = leiEstado;
+	public void setLeiestado(String leiestado) {
+		this.leiestado = leiestado;
 	}
 
 	public String getLeiEnderecoWeb() {
@@ -97,6 +89,4 @@ public class Leilao {
 		this.leiEnderecoWeb = leiEnderecoWeb;
 	}
 	
-	
-
 }
