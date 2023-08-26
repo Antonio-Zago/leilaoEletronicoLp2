@@ -16,6 +16,8 @@ import com.fatec.leilaoEletronicoLp2.models.TiposDi;
 import com.fatec.leilaoEletronicoLp2.repositorys.DispositivosInformaticaRepository;
 import com.fatec.leilaoEletronicoLp2.repositorys.TiposDiRepository;
 
+import jakarta.persistence.EntityNotFoundException;
+
 @Service
 public class DispositivosInformaticaService {
 	
@@ -37,7 +39,7 @@ public class DispositivosInformaticaService {
 	
 	public ResponseEntity<DispositivoInformaticaDto> save(DispositivoInformaticaForm dispositivoInformaticaForm) {
 		
-		TiposDi tipoDi = tipoDiRepository.findById(dispositivoInformaticaForm.getTipoDi()).get();
+		TiposDi tipoDi = tipoDiRepository.findById(dispositivoInformaticaForm.getTipoDi()).orElseThrow(() -> new EntityNotFoundException("Não encontrado registro de id: " + dispositivoInformaticaForm.getTipoDi() + " na classe: " + TiposDi.class.toString()));;;
 		
 		DispositivoInformatica dispositivoInformatica = new DispositivoInformatica(
 				dispositivoInformaticaForm.getDiEnderecoFisico(),
@@ -57,9 +59,9 @@ public class DispositivosInformaticaService {
 	
 	public ResponseEntity<DispositivoInformaticaDto>  update(DispositivoInformaticaForm dispositivoInformaticaForm, Integer id) {
 		
-		DispositivoInformatica dispositivoInformatica = dispositivosInformaticaRepository.findById(id).orElseThrow(()-> new ObjectNotFoundException(id, TiposDi.class.toString()));
+		DispositivoInformatica dispositivoInformatica = dispositivosInformaticaRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Não encontrado registro de id: " + id + " na classe: " + DispositivoInformatica.class.toString() ));                   
 		
-		TiposDi tipoDi = tipoDiRepository.findById(dispositivoInformaticaForm.getTipoDi()).orElseThrow(() -> new ObjectNotFoundException(dispositivoInformaticaForm.getTipoDi(), TiposDi.class.toString()));
+		TiposDi tipoDi = tipoDiRepository.findById(dispositivoInformaticaForm.getTipoDi()).orElseThrow(() -> new EntityNotFoundException("Não encontrado registro de id: " + dispositivoInformaticaForm.getTipoDi() + " na classe: " + TiposDi.class.toString()));
 		
 		dispositivoInformatica.setDiArmazenamento(dispositivoInformaticaForm.getDiArmazenamento());
 		dispositivoInformatica.setDiEnderecoFisico(dispositivoInformaticaForm.getDiEnderecoFisico());
@@ -80,7 +82,7 @@ public class DispositivosInformaticaService {
 	}
 	
 	public ResponseEntity<DispositivoInformaticaDto> getById(Integer id){
-		return ResponseEntity.ok().body(converteParaDto(dispositivosInformaticaRepository.findById(id).get()));
+		return ResponseEntity.ok().body(converteParaDto(dispositivosInformaticaRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Não encontrado registro de id: " + id + " na classe: " + DispositivoInformatica.class.toString()))));
 	}
 	
 	public DispositivoInformaticaDto converteParaDto(DispositivoInformatica dispositivoInformatica) {
