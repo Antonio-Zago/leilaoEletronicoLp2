@@ -28,6 +28,7 @@ public class Leilao {
 	
 	private String leiEnderecoWeb;
 	
+	public Leilao() {}
 	
 	
 	public Leilao(Date leiDataOcorrencia, Date leiDataVisitacao, String leiEndereco, String leiCidade, String leiEstado,

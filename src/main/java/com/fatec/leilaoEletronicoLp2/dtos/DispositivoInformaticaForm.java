@@ -19,6 +19,18 @@ public class DispositivoInformaticaForm {
 	private int diNumeroPortas;
 	
 	private int tipoDi;
+	
+	private Integer leilao;
+	
+	
+
+	public Integer getLeilao() {
+		return leilao;
+	}
+
+	public void setLeilao(Integer leilao) {
+		this.leilao = leilao;
+	}
 
 	public String getDiEnderecoFisico() {
 		return diEnderecoFisico;

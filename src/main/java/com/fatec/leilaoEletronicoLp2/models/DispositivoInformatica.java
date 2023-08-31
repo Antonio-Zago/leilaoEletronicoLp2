@@ -17,7 +17,7 @@ public class DispositivoInformatica {
 	
 	
 	public DispositivoInformatica(String diEnderecoFisico, String diMarca, String diProcessador, String diTela,
-			double diArmazenamento, double diMemoria, int diTensao, int diNumeroPortas, TiposDi tipoDi) {
+			double diArmazenamento, double diMemoria, int diTensao, int diNumeroPortas, TiposDi tipoDi, Leilao leilao) {
 		this.diEnderecoFisico = diEnderecoFisico;
 		this.diMarca = diMarca;
 		this.diProcessador = diProcessador;
@@ -27,6 +27,7 @@ public class DispositivoInformatica {
 		this.diTensao = diTensao;
 		this.diNumeroPortas = diNumeroPortas;
 		this.tipoDi = tipoDi;
+		this.leilao = leilao;
 	}
 
 
@@ -49,8 +50,27 @@ public class DispositivoInformatica {
 	@JoinColumn(name =  "tipoDi")
 	private TiposDi tipoDi;
 	
+	@ManyToOne
+	@JoinColumn(name = "leilao")
+	private Leilao leilao;
 	
 	
+	
+	
+	
+	
+	public Leilao getLeilao() {
+		return leilao;
+	}
+
+
+
+	public void setLeilao(Leilao leilao) {
+		this.leilao = leilao;
+	}
+
+
+
 	public TiposDi getTipoDi() {
 		return tipoDi;
 	}

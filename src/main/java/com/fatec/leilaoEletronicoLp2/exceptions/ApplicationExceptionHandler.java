@@ -1,5 +1,6 @@
 package com.fatec.leilaoEletronicoLp2.exceptions;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -18,5 +19,12 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler{
 		
 		DefaultError erro = new DefaultError(HttpStatus.NOT_FOUND.value(), e.getMessage());
 		return new ResponseEntity<DefaultError>(erro, HttpStatus.NOT_FOUND);
+	}
+	
+	@ExceptionHandler(DataIntegrityViolationException.class)
+	public ResponseEntity<DefaultError> violacaoIntegridade(DataIntegrityViolationException e, HttpServletRequest request) {
+		
+		DefaultError erro = new DefaultError(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage());
+		return new ResponseEntity<DefaultError>(erro, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 }

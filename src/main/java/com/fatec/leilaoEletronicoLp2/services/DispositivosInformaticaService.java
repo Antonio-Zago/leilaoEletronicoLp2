@@ -12,8 +12,10 @@ import org.springframework.stereotype.Service;
 import com.fatec.leilaoEletronicoLp2.dtos.DispositivoInformaticaDto;
 import com.fatec.leilaoEletronicoLp2.dtos.DispositivoInformaticaForm;
 import com.fatec.leilaoEletronicoLp2.models.DispositivoInformatica;
+import com.fatec.leilaoEletronicoLp2.models.Leilao;
 import com.fatec.leilaoEletronicoLp2.models.TiposDi;
 import com.fatec.leilaoEletronicoLp2.repositorys.DispositivosInformaticaRepository;
+import com.fatec.leilaoEletronicoLp2.repositorys.LeilaoRepository;
 import com.fatec.leilaoEletronicoLp2.repositorys.TiposDiRepository;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -27,6 +29,9 @@ public class DispositivosInformaticaService {
 	@Autowired
 	private TiposDiRepository tipoDiRepository;
 	
+	@Autowired
+	private LeilaoRepository leilaoRepository;
+	
 	public ResponseEntity<List<DispositivoInformaticaDto>> getAll(){
 		List<DispositivoInformatica> dispositivoInformaticas= dispositivosInformaticaRepository.findAll();
 		List<DispositivoInformaticaDto> dispositivoInformaticaDtos = new ArrayList<DispositivoInformaticaDto>();
@@ -39,7 +44,9 @@ public class DispositivosInformaticaService {
 	
 	public ResponseEntity<DispositivoInformaticaDto> save(DispositivoInformaticaForm dispositivoInformaticaForm) {
 		
-		TiposDi tipoDi = tipoDiRepository.findById(dispositivoInformaticaForm.getTipoDi()).orElseThrow(() -> new EntityNotFoundException("Não encontrado registro de id: " + dispositivoInformaticaForm.getTipoDi() + " na classe: " + TiposDi.class.toString()));;;
+		TiposDi tipoDi = tipoDiRepository.findById(dispositivoInformaticaForm.getTipoDi()).orElseThrow(() -> new EntityNotFoundException("Não encontrado registro de id: " + dispositivoInformaticaForm.getTipoDi() + " na classe: " + TiposDi.class.toString()));
+		
+		Leilao leilao = leilaoRepository.findById(dispositivoInformaticaForm.getLeilao()).orElseThrow(() -> new EntityNotFoundException("Não encontrado registro de id: " + dispositivoInformaticaForm.getLeilao() + " na classe: " + Leilao.class.toString()));
 		
 		DispositivoInformatica dispositivoInformatica = new DispositivoInformatica(
 				dispositivoInformaticaForm.getDiEnderecoFisico(),
@@ -50,7 +57,8 @@ public class DispositivosInformaticaService {
 				dispositivoInformaticaForm.getDiMemoria(),
 				dispositivoInformaticaForm.getDiTensao(),
 				dispositivoInformaticaForm.getDiNumeroPortas(),
-				tipoDi
+				tipoDi,
+				leilao
 				);
 		
 		
@@ -63,6 +71,8 @@ public class DispositivosInformaticaService {
 		
 		TiposDi tipoDi = tipoDiRepository.findById(dispositivoInformaticaForm.getTipoDi()).orElseThrow(() -> new EntityNotFoundException("Não encontrado registro de id: " + dispositivoInformaticaForm.getTipoDi() + " na classe: " + TiposDi.class.toString()));
 		
+		Leilao leilao = leilaoRepository.findById(dispositivoInformaticaForm.getLeilao()).orElseThrow(() -> new EntityNotFoundException("Não encontrado registro de id: " + dispositivoInformaticaForm.getLeilao() + " na classe: " + Leilao.class.toString()));
+		
 		dispositivoInformatica.setDiArmazenamento(dispositivoInformaticaForm.getDiArmazenamento());
 		dispositivoInformatica.setDiEnderecoFisico(dispositivoInformaticaForm.getDiEnderecoFisico());
 		dispositivoInformatica.setDiMarca(dispositivoInformaticaForm.getDiMarca());
@@ -72,8 +82,9 @@ public class DispositivosInformaticaService {
 		dispositivoInformatica.setDiTela(dispositivoInformaticaForm.getDiTela());
 		dispositivoInformatica.setDiTensao(dispositivoInformaticaForm.getDiTensao());
 		dispositivoInformatica.setTipoDi(tipoDi);
+		dispositivoInformatica.setLeilao(leilao);
 		
-		return ResponseEntity.ok().body(converteParaDto(dispositivoInformatica));
+		return ResponseEntity.ok().body(converteParaDto(dispositivosInformaticaRepository.save(dispositivoInformatica)));
 	}
 	
 	public void delete(Integer id) {
@@ -96,7 +107,8 @@ public class DispositivosInformaticaService {
 				dispositivoInformatica.getDiMemoria(),
 				dispositivoInformatica.getDiTensao(),
 				dispositivoInformatica.getDiNumeroPortas(),
-				dispositivoInformatica.getTipoDi().getTdiNome());
+				dispositivoInformatica.getTipoDi().getTdiNome(),
+				dispositivoInformatica.getLeilao().getLeiDataOcorrencia());
 	}
 
 }
