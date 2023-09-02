@@ -35,4 +35,11 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler{
 		DefaultError erro = new DefaultError(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage());
 		return new ResponseEntity<DefaultError>(erro, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
+	
+	@ExceptionHandler(NullPointerException.class)
+	public ResponseEntity<DefaultError> nullPointer(NullPointerException e, HttpServletRequest request) {
+		
+		DefaultError erro = new DefaultError(HttpStatus.NOT_FOUND.value(), e.getMessage());
+		return new ResponseEntity<DefaultError>(erro, HttpStatus.NOT_FOUND);
+	}
 }

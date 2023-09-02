@@ -40,18 +40,17 @@ public class ClienteService {
 		return ResponseEntity.ok().body(clienteDtos);
 	}
 	
-	public ResponseEntity<ClienteDto> save(ClienteForm clienteForm) {
+	public ResponseEntity<ClienteDto> save(ClienteForm clienteForm)  {
 		
-		
-		
-		Cliente cliente = new Cliente(
+
+		Cliente clienteNovo = new Cliente(
 				clienteForm.getCliCpf(),
 				clienteForm.getCliNome(),
 				clienteForm.getCliEmail()
 				);
 		
 		
-		return ResponseEntity.ok().body(converteParaDto(clienteRepository.save(cliente)));
+		return ResponseEntity.ok().body(converteParaDto(clienteRepository.save(clienteNovo)));
 	}
 	
 	public ResponseEntity<ClienteDto>  update(ClienteForm clienteForm, String cpf) {
@@ -61,6 +60,8 @@ public class ClienteService {
 
 		cliente.setCliNome(clienteForm.getCliNome());
 		cliente.setCliEmail(clienteForm.getCliEmail());
+
+		
 		
 		return ResponseEntity.ok().body(converteParaDto(clienteRepository.save(cliente)));
 	}
@@ -68,7 +69,7 @@ public class ClienteService {
 	@Transactional
 	public void delete(String cpf) {
 		
-		clienteRepository.deleteBycliCpf(cpf);;
+		clienteRepository.deleteBycliCpf(cpf);
 	}
 	
 	public ResponseEntity<ClienteDto> getById(String cpf){

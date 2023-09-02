@@ -12,11 +12,23 @@ import jakarta.persistence.Table;
 @Table(name = "CLIENTE_DISPOSITIVO_INFORMATICA")
 public class ClienteDispositivoInformatica {
 	
+	
+	
+	public ClienteDispositivoInformatica(Double clidiValorLance, Cliente cliente,
+			DispositivoInformatica dispositivoInformatica) {
+		super();
+		this.clidiValorLance = clidiValorLance;
+		this.cliente = cliente;
+		this.dispositivoInformatica = dispositivoInformatica;
+	}
+
+	public ClienteDispositivoInformatica() {}
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int clidiId;
 	
-	private double clidiValorLance;
+	private Double clidiValorLance;
 	
 	@ManyToOne
 	@JoinColumn(name = "cliente")
@@ -34,11 +46,11 @@ public class ClienteDispositivoInformatica {
 		this.clidiId = clidiId;
 	}
 
-	public double getClidiValorLance() {
+	public Double getClidiValorLance() {
 		return clidiValorLance;
 	}
 
-	public void setClidiValorLance(double clidiValorLance) {
+	public void setClidiValorLance(Double clidiValorLance) {
 		this.clidiValorLance = clidiValorLance;
 	}
 
