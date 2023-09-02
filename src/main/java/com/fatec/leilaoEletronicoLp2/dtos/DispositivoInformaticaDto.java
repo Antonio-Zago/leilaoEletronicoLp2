@@ -1,13 +1,13 @@
 package com.fatec.leilaoEletronicoLp2.dtos;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class DispositivoInformaticaDto {
 	
 	
 	
 	public DispositivoInformaticaDto(Integer diId, String diEnderecoFisico, String diMarca, String diProcessador,
-			String diTela, Double diArmazenamento, Double diMemoria, Integer diTensao, Integer diNumeroPortas, String tipoDiNome, Date leilaoDataOcorrencia) {
+			String diTela, Double diArmazenamento, Double diMemoria, Integer diTensao, Integer diNumeroPortas, String tipoDiNome, LocalDateTime leilaoDataOcorrencia) {
 		super();
 		this.diId = diId;
 		this.diEnderecoFisico = diEnderecoFisico;
@@ -42,17 +42,17 @@ public class DispositivoInformaticaDto {
 	
 	private String tipoDiNome;
 	
-	private Date leilaoDataOcorrencia;
+	private LocalDateTime leilaoDataOcorrencia;
 	
 	
 	
 	
 
-	public Date getLeilaoDataOcorrencia() {
+	public LocalDateTime getLeilaoDataOcorrencia() {
 		return leilaoDataOcorrencia;
 	}
 
-	public void setLeilaoDataOcorrencia(Date leilaoDataOcorrencia) {
+	public void setLeilaoDataOcorrencia(LocalDateTime leilaoDataOcorrencia) {
 		this.leilaoDataOcorrencia = leilaoDataOcorrencia;
 	}
 

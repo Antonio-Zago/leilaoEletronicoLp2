@@ -42,4 +42,11 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler{
 		DefaultError erro = new DefaultError(HttpStatus.NOT_FOUND.value(), e.getMessage());
 		return new ResponseEntity<DefaultError>(erro, HttpStatus.NOT_FOUND);
 	}
+	
+	@ExceptionHandler(DispositivosInformaticaTemLancesException.class)
+	public ResponseEntity<DefaultError> diPossuiLances(DispositivosInformaticaTemLancesException e, HttpServletRequest request) {
+		
+		DefaultError erro = new DefaultError(HttpStatus.UNPROCESSABLE_ENTITY.value(), e.getMessage());
+		return new ResponseEntity<DefaultError>(erro, HttpStatus.UNPROCESSABLE_ENTITY);
+	}
 }

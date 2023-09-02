@@ -1,6 +1,12 @@
 package com.fatec.leilaoEletronicoLp2.services;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -11,9 +17,13 @@ import org.springframework.stereotype.Service;
 
 import com.fatec.leilaoEletronicoLp2.dtos.DispositivoInformaticaDto;
 import com.fatec.leilaoEletronicoLp2.dtos.DispositivoInformaticaForm;
+import com.fatec.leilaoEletronicoLp2.exceptions.DefaultError;
+import com.fatec.leilaoEletronicoLp2.exceptions.DispositivosInformaticaTemLancesException;
+import com.fatec.leilaoEletronicoLp2.models.ClienteDispositivoInformatica;
 import com.fatec.leilaoEletronicoLp2.models.DispositivoInformatica;
 import com.fatec.leilaoEletronicoLp2.models.Leilao;
 import com.fatec.leilaoEletronicoLp2.models.TiposDi;
+import com.fatec.leilaoEletronicoLp2.repositorys.ClienteDispositivoInformaticaRepository;
 import com.fatec.leilaoEletronicoLp2.repositorys.DispositivosInformaticaRepository;
 import com.fatec.leilaoEletronicoLp2.repositorys.LeilaoRepository;
 import com.fatec.leilaoEletronicoLp2.repositorys.TiposDiRepository;
@@ -25,6 +35,10 @@ public class DispositivosInformaticaService {
 	
 	@Autowired
 	private DispositivosInformaticaRepository dispositivosInformaticaRepository;
+	
+	@Autowired
+	private ClienteDispositivoInformaticaRepository clienteDispositivoInformaticaRepository;
+	
 	
 	@Autowired
 	private TiposDiRepository tipoDiRepository;
@@ -48,6 +62,13 @@ public class DispositivosInformaticaService {
 		
 		Leilao leilao = leilaoRepository.findById(dispositivoInformaticaForm.getLeilao()).orElseThrow(() -> new EntityNotFoundException("Não encontrado registro de id: " + dispositivoInformaticaForm.getLeilao() + " na classe: " + Leilao.class.toString()));
 		
+		LocalDateTime dataAtual = LocalDateTime.now();
+		
+		if(!dataAtual.isBefore(leilao.getLeiDataOcorrencia()))  {
+			throw new DispositivosInformaticaTemLancesException("O leilão que está cadastrando no dispositivo de informática já encerrou !!!");
+		}
+		
+		
 		DispositivoInformatica dispositivoInformatica = new DispositivoInformatica(
 				dispositivoInformaticaForm.getDiEnderecoFisico(),
 				dispositivoInformaticaForm.getDiMarca(),
@@ -69,9 +90,24 @@ public class DispositivosInformaticaService {
 		
 		DispositivoInformatica dispositivoInformatica = dispositivosInformaticaRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Não encontrado registro de id: " + id + " na classe: " + DispositivoInformatica.class.toString() ));                   
 		
-		TiposDi tipoDi = tipoDiRepository.findById(dispositivoInformaticaForm.getTipoDi()).orElseThrow(() -> new EntityNotFoundException("Não encontrado registro de id: " + dispositivoInformaticaForm.getTipoDi() + " na classe: " + TiposDi.class.toString()));
+		List<ClienteDispositivoInformatica> lances = clienteDispositivoInformaticaRepository.findBydispositivoInformatica(dispositivoInformatica);
 		
 		Leilao leilao = leilaoRepository.findById(dispositivoInformaticaForm.getLeilao()).orElseThrow(() -> new EntityNotFoundException("Não encontrado registro de id: " + dispositivoInformaticaForm.getLeilao() + " na classe: " + Leilao.class.toString()));
+		
+		
+		
+		if(!lances.isEmpty() && dispositivoInformatica.getLeilao().getLeiId() != dispositivoInformaticaForm.getLeilao()) {
+			throw new DispositivosInformaticaTemLancesException("O dispositivo de informática que está tentando alterar o leilão já possui lances registrados!!!");
+		}
+		
+		
+		LocalDateTime dataAtual = LocalDateTime.now();
+		
+		if(dispositivoInformatica.getLeilao().getLeiDataOcorrencia() != leilao.getLeiDataOcorrencia() && !dataAtual.isBefore(leilao.getLeiDataOcorrencia()))  {
+			throw new DispositivosInformaticaTemLancesException("O leilão que está cadastrando no dispositivo de informática já encerrou !!!");
+		}
+		
+		TiposDi tipoDi = tipoDiRepository.findById(dispositivoInformaticaForm.getTipoDi()).orElseThrow(() -> new EntityNotFoundException("Não encontrado registro de id: " + dispositivoInformaticaForm.getTipoDi() + " na classe: " + TiposDi.class.toString()));
 		
 		dispositivoInformatica.setDiArmazenamento(dispositivoInformaticaForm.getDiArmazenamento());
 		dispositivoInformatica.setDiEnderecoFisico(dispositivoInformaticaForm.getDiEnderecoFisico());
@@ -96,7 +132,7 @@ public class DispositivosInformaticaService {
 		return ResponseEntity.ok().body(converteParaDto(dispositivosInformaticaRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Não encontrado registro de id: " + id + " na classe: " + DispositivoInformatica.class.toString()))));
 	}
 	
-	public DispositivoInformaticaDto converteParaDto(DispositivoInformatica dispositivoInformatica) {
+	private DispositivoInformaticaDto converteParaDto(DispositivoInformatica dispositivoInformatica) {
 		return new DispositivoInformaticaDto(
 				dispositivoInformatica.getDiId(),
 				dispositivoInformatica.getDiEnderecoFisico(),
@@ -110,5 +146,7 @@ public class DispositivosInformaticaService {
 				dispositivoInformatica.getTipoDi().getTdiNome(),
 				dispositivoInformatica.getLeilao().getLeiDataOcorrencia());
 	}
+	
+
 
 }
