@@ -35,6 +35,11 @@ public class LeiloesController {
 		return leilaoService.getAll();
 	}
 	
+	@GetMapping(value = "/dataOcorrencia")
+	public ResponseEntity<List<LeilaoDto>> getAllOrderByDataOcorrencia(){
+		return leilaoService.getAllOrderByDataOcorrencia();
+	}
+	
 	@PostMapping
 	public ResponseEntity<LeilaoDto> save(@RequestBody LeilaoForm leilaoForm) {
 		
