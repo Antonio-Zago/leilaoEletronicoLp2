@@ -1,5 +1,6 @@
 package com.fatec.leilaoEletronicoLp2.services;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,7 +59,8 @@ public class ClienteDispositivoInformaticaService {
 		ClienteDispositivoInformatica clienteDispositivoInformatica = new ClienteDispositivoInformatica(
 				clienteDispositivoInformaticaForm.getValor(),
 				cliente,
-				dispositivoInformatica
+				dispositivoInformatica,
+				LocalDateTime.now()
 				);
 		
 		
@@ -96,7 +98,8 @@ public class ClienteDispositivoInformaticaService {
 				clienteDispositivoInformatica.getClidiValorLance(),
 				clienteDispositivoInformatica.getCliente().getCliNome(),
 				clienteDispositivoInformatica.getCliente().getCliCpf(),
-				clienteDispositivoInformatica.getDispositivoInformatica().getDiId()
+				clienteDispositivoInformatica.getDispositivoInformatica().getDiId(),
+				clienteDispositivoInformatica.getClidiDataHoraLance()
 		);
 	}
 }

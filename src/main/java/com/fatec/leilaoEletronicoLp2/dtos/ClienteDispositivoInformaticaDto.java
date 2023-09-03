@@ -1,5 +1,7 @@
 package com.fatec.leilaoEletronicoLp2.dtos;
 
+import java.time.LocalDateTime;
+
 public class ClienteDispositivoInformaticaDto {
 	
 	private Integer id;
@@ -12,17 +14,20 @@ public class ClienteDispositivoInformaticaDto {
 	
 	private Integer dispositivoinformatica;
 	
+	private LocalDateTime dataHoraLance;
+	
 	
 	
 
 	public ClienteDispositivoInformaticaDto(Integer id, Double valor, String clienteNome, String clienteCpf,
-			Integer dispositivoinformatica) {
+			Integer dispositivoinformatica, LocalDateTime dataHoraLance) {
 		super();
 		this.id = id;
 		this.valor = valor;
 		this.clienteNome = clienteNome;
 		this.clienteCpf = clienteCpf;
 		this.dispositivoinformatica = dispositivoinformatica;
+		this.dataHoraLance = dataHoraLance;
 	}
 
 	public Integer getId() {
@@ -64,6 +69,16 @@ public class ClienteDispositivoInformaticaDto {
 	public void setDispositivoinformatica(Integer dispositivoinformatica) {
 		this.dispositivoinformatica = dispositivoinformatica;
 	}
+
+	public LocalDateTime getDataHoraLance() {
+		return dataHoraLance;
+	}
+
+	public void setDataHoraLance(LocalDateTime dataHoraLance) {
+		this.dataHoraLance = dataHoraLance;
+	}
+	
+	
 	
 	
 }
