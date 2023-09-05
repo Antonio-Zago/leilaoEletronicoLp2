@@ -1,5 +1,7 @@
 package com.fatec.leilaoEletronicoLp2.models;
 
+import java.time.LocalDateTime;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -12,11 +14,26 @@ import jakarta.persistence.Table;
 @Table(name = "CLIENTE_DISPOSITIVO_INFORMATICA")
 public class ClienteDispositivoInformatica {
 	
+	
+	
+	public ClienteDispositivoInformatica(Double clidiValorLance, Cliente cliente,
+			DispositivoInformatica dispositivoInformatica, LocalDateTime clidiDataHoraLance) {
+		super();
+		this.clidiValorLance = clidiValorLance;
+		this.cliente = cliente;
+		this.dispositivoInformatica = dispositivoInformatica;
+		this.clidiDataHoraLance = clidiDataHoraLance;
+	}
+
+	public ClienteDispositivoInformatica() {}
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int clidiId;
 	
-	private double clidiValorLance;
+	private Double clidiValorLance;
+	
+	private LocalDateTime clidiDataHoraLance;
 	
 	@ManyToOne
 	@JoinColumn(name = "cliente")
@@ -34,11 +51,11 @@ public class ClienteDispositivoInformatica {
 		this.clidiId = clidiId;
 	}
 
-	public double getClidiValorLance() {
+	public Double getClidiValorLance() {
 		return clidiValorLance;
 	}
 
-	public void setClidiValorLance(double clidiValorLance) {
+	public void setClidiValorLance(Double clidiValorLance) {
 		this.clidiValorLance = clidiValorLance;
 	}
 
@@ -57,6 +74,16 @@ public class ClienteDispositivoInformatica {
 	public void setDispositivoInformatica(DispositivoInformatica dispositivoInformatica) {
 		this.dispositivoInformatica = dispositivoInformatica;
 	}
+
+	public LocalDateTime getClidiDataHoraLance() {
+		return clidiDataHoraLance;
+	}
+
+	public void setClidiDataHoraLance(LocalDateTime clidiDataHoraLance) {
+		this.clidiDataHoraLance = clidiDataHoraLance;
+	}
+	
+	
 	
 	
 	

@@ -1,12 +1,13 @@
 package com.fatec.leilaoEletronicoLp2.dtos;
 
+import java.time.LocalDateTime;
 
 public class DispositivoInformaticaDto {
 	
 	
 	
 	public DispositivoInformaticaDto(Integer diId, String diEnderecoFisico, String diMarca, String diProcessador,
-			String diTela, double diArmazenamento, double diMemoria, int diTensao, int diNumeroPortas, String tipoDiNome) {
+			String diTela, Double diArmazenamento, Double diMemoria, Integer diTensao, Integer diNumeroPortas, String tipoDiNome, LocalDateTime leilaoDataOcorrencia) {
 		super();
 		this.diId = diId;
 		this.diEnderecoFisico = diEnderecoFisico;
@@ -18,6 +19,7 @@ public class DispositivoInformaticaDto {
 		this.diTensao = diTensao;
 		this.diNumeroPortas = diNumeroPortas;
 		this.tipoDiNome = tipoDiNome;
+		this.leilaoDataOcorrencia = leilaoDataOcorrencia;
 	}
 
 	private Integer diId;
@@ -30,15 +32,33 @@ public class DispositivoInformaticaDto {
 	
 	private String diTela;
 	
-	private double diArmazenamento;
+	private Double diArmazenamento;
 	
-	private double diMemoria;
+	private Double diMemoria;
 	
-	private int diTensao;
+	private Integer diTensao;
 	
-	private int diNumeroPortas;
+	private Integer diNumeroPortas;
 	
 	private String tipoDiNome;
+	
+	private LocalDateTime leilaoDataOcorrencia;
+	
+	
+	
+	
+
+	public LocalDateTime getLeilaoDataOcorrencia() {
+		return leilaoDataOcorrencia;
+	}
+
+	public void setLeilaoDataOcorrencia(LocalDateTime leilaoDataOcorrencia) {
+		this.leilaoDataOcorrencia = leilaoDataOcorrencia;
+	}
+
+	public void setDiMemoria(Double diMemoria) {
+		this.diMemoria = diMemoria;
+	}
 
 	public Integer getDiId() {
 		return diId;
@@ -80,11 +100,11 @@ public class DispositivoInformaticaDto {
 		this.diTela = diTela;
 	}
 
-	public double getDiArmazenamento() {
+	public Double getDiArmazenamento() {
 		return diArmazenamento;
 	}
 
-	public void setDiArmazenamento(double diArmazenamento) {
+	public void setDiArmazenamento(Double diArmazenamento) {
 		this.diArmazenamento = diArmazenamento;
 	}
 
@@ -96,19 +116,19 @@ public class DispositivoInformaticaDto {
 		this.diMemoria = diMemoria;
 	}
 
-	public int getDiTensao() {
+	public Integer getDiTensao() {
 		return diTensao;
 	}
 
-	public void setDiTensao(int diTensao) {
+	public void setDiTensao(Integer diTensao) {
 		this.diTensao = diTensao;
 	}
 
-	public int getDiNumeroPortas() {
+	public Integer getDiNumeroPortas() {
 		return diNumeroPortas;
 	}
 
-	public void setDiNumeroPortas(int diNumeroPortas) {
+	public void setDiNumeroPortas(Integer diNumeroPortas) {
 		this.diNumeroPortas = diNumeroPortas;
 	}
 

@@ -1,14 +1,15 @@
 package com.fatec.leilaoEletronicoLp2.dtos;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class LeilaoDto {
 	
 	private Integer leiId;
 	
-	private Date leiDataOcorrencia;
+	private LocalDateTime leiDataOcorrencia;
 	
-	private Date leiDataVisitacao;
+	private LocalDateTime leiDataVisitacao;
 	
 	private String leiEndereco;
 	
@@ -21,7 +22,7 @@ public class LeilaoDto {
 	
 	
 	
-	public LeilaoDto(Integer leiId, Date leiDataOcorrencia, Date leiDataVisitacao, String leiEndereco, String leiCidade,
+	public LeilaoDto(Integer leiId, LocalDateTime leiDataOcorrencia, LocalDateTime leiDataVisitacao, String leiEndereco, String leiCidade,
 			String leiestado, String leiEnderecoWeb) {
 		super();
 		this.leiId = leiId;
@@ -41,19 +42,19 @@ public class LeilaoDto {
 		this.leiId = leiId;
 	}
 
-	public Date getLeiDataOcorrencia() {
+	public LocalDateTime getLeiDataOcorrencia() {
 		return leiDataOcorrencia;
 	}
 
-	public void setLeiDataOcorrencia(Date leiDataOcorrencia) {
+	public void setLeiDataOcorrencia(LocalDateTime leiDataOcorrencia) {
 		this.leiDataOcorrencia = leiDataOcorrencia;
 	}
 
-	public Date getLeiDataVisitacao() {
+	public LocalDateTime getLeiDataVisitacao() {
 		return leiDataVisitacao;
 	}
 
-	public void setLeiDataVisitacao(Date leiDataVisitacao) {
+	public void setLeiDataVisitacao(LocalDateTime leiDataVisitacao) {
 		this.leiDataVisitacao = leiDataVisitacao;
 	}
 

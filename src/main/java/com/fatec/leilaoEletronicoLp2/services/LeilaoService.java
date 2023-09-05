@@ -7,16 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.fatec.leilaoEletronicoLp2.dtos.DispositivoInformaticaDto;
-import com.fatec.leilaoEletronicoLp2.dtos.DispositivoInformaticaForm;
+
 import com.fatec.leilaoEletronicoLp2.dtos.LeilaoDto;
 import com.fatec.leilaoEletronicoLp2.dtos.LeilaoForm;
-import com.fatec.leilaoEletronicoLp2.models.DispositivoInformatica;
 import com.fatec.leilaoEletronicoLp2.models.Leilao;
-import com.fatec.leilaoEletronicoLp2.models.TiposDi;
-import com.fatec.leilaoEletronicoLp2.repositorys.DispositivosInformaticaRepository;
 import com.fatec.leilaoEletronicoLp2.repositorys.LeilaoRepository;
-import com.fatec.leilaoEletronicoLp2.repositorys.TiposDiRepository;
 
 import jakarta.persistence.EntityNotFoundException;
 
@@ -67,7 +62,7 @@ public class LeilaoService {
 		leilao.setLeiEnderecoWeb(leilaoForm.getLeiEnderecoWeb());
 		leilao.setLeiEstado(leilaoForm.getLeiestado());
 		
-		return ResponseEntity.ok().body(converteParaDto(leilao));
+		return ResponseEntity.ok().body(converteParaDto(leilaoRepository.save(leilao)));
 	}
 	
 	public void delete(Integer id) {
@@ -79,7 +74,7 @@ public class LeilaoService {
 		return ResponseEntity.ok().body(converteParaDto(leilaoRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Não encontrado registro de id: " + id + " na classe: " + Leilao.class.toString()))));
 	}
 	
-	public LeilaoDto converteParaDto(Leilao leilao) {
+	private LeilaoDto converteParaDto(Leilao leilao) {
 		return new LeilaoDto(
 				leilao.getLeiId(),
 				leilao.getLeiDataOcorrencia(),
@@ -90,4 +85,6 @@ public class LeilaoService {
 				leilao.getLeiEnderecoWeb()
 		);
 	}
+	
+
 }
