@@ -15,6 +15,17 @@ public class EntidadeFinanceira {
 	private Integer entfinId;
 	
 	private String entfinNome;
+	
+	public EntidadeFinanceira() {}
+	
+	
+
+	public EntidadeFinanceira(String entfinNome) {
+		super();
+		this.entfinNome = entfinNome;
+	}
+
+
 
 	public Integer getEntfinId() {
 		return entfinId;

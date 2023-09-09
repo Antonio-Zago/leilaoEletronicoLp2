@@ -40,8 +40,7 @@ public class EntidadesFinanceirasController {
         entidadesFinanceirasService.delete(id);
     }
 
-    @GetMapping ("/id")
-
+    @GetMapping("/{id}")
     public ResponseEntity<EntidadesFinanceirasDto> getById (@PathVariable Integer id){
         return  entidadesFinanceirasService.getById (id);
     }
