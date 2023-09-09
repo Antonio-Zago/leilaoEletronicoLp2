@@ -2,11 +2,15 @@ package com.fatec.leilaoEletronicoLp2.models;
 
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -29,11 +33,18 @@ public class Leilao {
 	
 	private String leiEnderecoWeb;
 	
+	@ManyToMany
+    @JoinTable(
+    		name="leilao_entidade_financeira",
+    		joinColumns= @JoinColumn(name = "leiId"), 
+    		inverseJoinColumns=@JoinColumn(name="entfinId"))
+	private List<EntidadeFinanceira> entidadesFinanceiras;
+	
 	public Leilao() {}
 	
 	
 	public Leilao(LocalDateTime leiDataOcorrencia, LocalDateTime leiDataVisitacao, String leiEndereco, String leiCidade, String leiEstado,
-			String leiEnderecoWeb) {
+			String leiEnderecoWeb, List<EntidadeFinanceira> entidadeFinanceiras) {
 		super();
 		this.leiDataOcorrencia = leiDataOcorrencia;
 		this.leiDataVisitacao = leiDataVisitacao;
@@ -41,7 +52,20 @@ public class Leilao {
 		this.leiCidade = leiCidade;
 		this.leiEstado = leiEstado;
 		this.leiEnderecoWeb = leiEnderecoWeb;
+		this.entidadesFinanceiras = entidadeFinanceiras;
 	}
+	
+	
+
+	public List<EntidadeFinanceira> getEntidadesFinanceiras() {
+		return entidadesFinanceiras;
+	}
+
+
+	public void setEntidadesFinanceiras(List<EntidadeFinanceira> entidadesFinanceiras) {
+		this.entidadesFinanceiras = entidadesFinanceiras;
+	}
+
 
 	public Integer getLeiId() {
 		return leiId;
