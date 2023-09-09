@@ -12,6 +12,28 @@ import jakarta.persistence.Table;
 @Table(name = "VEICULOS")
 public class Veiculos {
 	
+	public Veiculos() {}
+	
+	
+	
+	public Veiculos(String veiPlaca, String veiMarca, Integer veiAnoFabricacao, Double veiDistanciaRodada,
+			String veiCambio, String veiCombustivel, String veiCor, Double veiPeso, TiposVeiculos tipoVeiculo,
+			Leilao leilao) {
+		super();
+		this.veiPlaca = veiPlaca;
+		this.veiMarca = veiMarca;
+		this.veiAnoFabricacao = veiAnoFabricacao;
+		this.veiDistanciaRodada = veiDistanciaRodada;
+		this.veiCambio = veiCambio;
+		this.veiCombustivel = veiCombustivel;
+		this.veiCor = veiCor;
+		this.veiPeso = veiPeso;
+		this.tipoVeiculo = tipoVeiculo;
+		this.leilao = leilao;
+	}
+
+
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer veiId;
@@ -35,6 +57,20 @@ public class Veiculos {
 	@ManyToOne
 	@JoinColumn(name = "tipo_veiculo")
 	private TiposVeiculos tipoVeiculo;
+	
+	@ManyToOne
+	@JoinColumn(name = "leilao")
+	private Leilao leilao;
+	
+	
+
+	public Leilao getLeilao() {
+		return leilao;
+	}
+
+	public void setLeilao(Leilao leilao) {
+		this.leilao = leilao;
+	}
 
 	public Integer getVeiId() {
 		return veiId;
