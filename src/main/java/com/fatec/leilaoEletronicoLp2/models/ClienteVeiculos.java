@@ -1,5 +1,7 @@
 package com.fatec.leilaoEletronicoLp2.models;
 
+import java.time.LocalDateTime;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -25,6 +27,40 @@ public class ClienteVeiculos {
 	private Cliente cliente;
 	
 	private Double cliveiValorLance;
+	
+	private LocalDateTime clidiDataHoraLance;
+	
+	public ClienteVeiculos() {}
+	
+	
+	
+
+	public ClienteVeiculos(Veiculos veiculo, Cliente cliente, Double cliveiValorLance, LocalDateTime clidiDataHoraLance) {
+		super();
+		this.veiculo = veiculo;
+		this.cliente = cliente;
+		this.cliveiValorLance = cliveiValorLance;
+		this.clidiDataHoraLance = clidiDataHoraLance;
+	}
+	
+	
+
+
+
+
+	public LocalDateTime getClidiDataHoraLance() {
+		return clidiDataHoraLance;
+	}
+
+
+
+
+	public void setClidiDataHoraLance(LocalDateTime clidiDataHoraLance) {
+		this.clidiDataHoraLance = clidiDataHoraLance;
+	}
+
+
+
 
 	public Integer getCliveiId() {
 		return cliveiId;

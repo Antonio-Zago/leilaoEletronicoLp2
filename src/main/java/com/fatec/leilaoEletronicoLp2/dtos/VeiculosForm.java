@@ -6,7 +6,6 @@ import com.fatec.leilaoEletronicoLp2.models.Veiculos;
 import java.util.Date;
 
 public class VeiculosForm {
-    private Integer veiId;
 
     private String veiPlaca;
 
@@ -25,17 +24,22 @@ public class VeiculosForm {
     private Double veiPeso;
 
 
-    private TiposVeiculos tipoVeiculo;
+    private Integer tipoVeiculo;
+    
+    private Integer leilao;
+    
+    
 
-    public Integer getVeiId() {
-        return veiId;
-    }
 
-    public void setVeiId(Integer veiId) {
-        this.veiId = veiId;
-    }
+    public Integer getLeilao() {
+		return leilao;
+	}
 
-    public String getVeiPlaca() {
+	public void setLeilao(Integer leilao) {
+		this.leilao = leilao;
+	}
+
+	public String getVeiPlaca() {
         return veiPlaca;
     }
 
@@ -99,11 +103,11 @@ public class VeiculosForm {
         this.veiPeso = veiPeso;
     }
 
-    public TiposVeiculos getTipoVeiculo() {
+    public Integer getTipoVeiculo() {
         return tipoVeiculo;
     }
 
-    public void setTipoVeiculo(TiposVeiculos tipoVeiculo) {
+    public void setTipoVeiculo(Integer tipoVeiculo) {
         this.tipoVeiculo = tipoVeiculo;
     }
 

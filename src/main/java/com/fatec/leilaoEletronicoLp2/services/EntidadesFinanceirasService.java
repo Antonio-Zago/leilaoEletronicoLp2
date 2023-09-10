@@ -23,10 +23,10 @@ public class EntidadesFinanceirasService {
 
     //GetALL
     public ResponseEntity<List<EntidadesFinanceirasDto>> getAll() {
-        List<EntidadesFinanceirasController> entidadesFinanceiras = entidadesFinanceirasRepository.findAll();
+        List<EntidadeFinanceira> entidadesFinanceiras = entidadesFinanceirasRepository.findAll();
         List<EntidadesFinanceirasDto> entidadesFinanceirasDto = new ArrayList<EntidadesFinanceirasDto>();
 
-        for (EntidadesFinanceirasController entidadesFinanceira : entidadesFinanceiras) {
+        for (EntidadeFinanceira entidadesFinanceira : entidadesFinanceiras) {
             entidadesFinanceirasDto.add(converteParaDto(entidadesFinanceira));
         }
         return ResponseEntity.ok().body(entidadesFinanceirasDto);
@@ -41,16 +41,18 @@ public class EntidadesFinanceirasService {
     //Post
     public ResponseEntity<EntidadesFinanceirasDto> save(EntidadesFinanceirasForm entidadesFinanceirasForm) {
 
-        EntidadesFinanceirasController entidadesFinan = new EntidadesFinanceirasController(
-        );
+        EntidadeFinanceira entidadesFinan = new EntidadeFinanceira(entidadesFinanceirasForm.getEntfinNome());
 
         return ResponseEntity.ok().body(converteParaDto(entidadesFinanceirasRepository.save(entidadesFinan)));
     }
 
     //Put
     public ResponseEntity<EntidadesFinanceirasDto> update(EntidadesFinanceirasForm entidadesFinanceirasForm, Integer id) {
-        EntidadesFinanceirasController entidadesFinan = entidadesFinanceirasRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Não encontrado registro de id: " + id + " na classe: " + EntidadesFinanceirasController.class.toString()));
-        return ResponseEntity.ok().body(converteParaDto(entidadesFinan));
+        EntidadeFinanceira entidadesFinan = entidadesFinanceirasRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Não encontrado registro de id: " + id + " na classe: " + EntidadesFinanceirasController.class.toString()));
+        
+        entidadesFinan.setEntfinNome(entidadesFinanceirasForm.getEntfinNome());
+        
+        return ResponseEntity.ok().body(converteParaDto(entidadesFinanceirasRepository.save(entidadesFinan)));
     }
 
     //Delete
@@ -62,8 +64,8 @@ public class EntidadesFinanceirasService {
     }
 
     //Converter
-    public EntidadesFinanceirasDto converteParaDto(EntidadesFinanceirasController EntidadesFinanceiras) {
-        return new EntidadesFinanceirasDto();
+    public EntidadesFinanceirasDto converteParaDto(EntidadeFinanceira EntidadesFinanceiras) {
+        return new EntidadesFinanceirasDto(EntidadesFinanceiras.getEntfinId(), EntidadesFinanceiras.getEntfinNome());
     }
 
 
