@@ -49,4 +49,18 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler{
 		DefaultError erro = new DefaultError(HttpStatus.UNPROCESSABLE_ENTITY.value(), e.getMessage());
 		return new ResponseEntity<DefaultError>(erro, HttpStatus.UNPROCESSABLE_ENTITY);
 	}
+	
+	@ExceptionHandler(LeilaoSemEntidadesFinanceirasAssociadas.class)
+	public ResponseEntity<DefaultError> leilaoSemEntidadeFinanceira(LeilaoSemEntidadesFinanceirasAssociadas e, HttpServletRequest request) {
+		
+		DefaultError erro = new DefaultError(HttpStatus.UNPROCESSABLE_ENTITY.value(), e.getMessage());
+		return new ResponseEntity<DefaultError>(erro, HttpStatus.UNPROCESSABLE_ENTITY);
+	}
+	
+	@ExceptionHandler(ClienteJaCadastradoException.class)
+	public ResponseEntity<DefaultError> clienteJaCadastrado(ClienteJaCadastradoException e, HttpServletRequest request) {
+		
+		DefaultError erro = new DefaultError(HttpStatus.UNPROCESSABLE_ENTITY.value(), e.getMessage());
+		return new ResponseEntity<DefaultError>(erro, HttpStatus.UNPROCESSABLE_ENTITY);
+	}
 }
