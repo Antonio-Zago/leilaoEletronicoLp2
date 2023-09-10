@@ -12,6 +12,7 @@ import com.fatec.leilaoEletronicoLp2.dtos.ClienteDto;
 import com.fatec.leilaoEletronicoLp2.dtos.ClienteForm;
 import com.fatec.leilaoEletronicoLp2.dtos.DispositivoInformaticaDto;
 import com.fatec.leilaoEletronicoLp2.dtos.DispositivoInformaticaForm;
+import com.fatec.leilaoEletronicoLp2.exceptions.ClienteJaCadastradoException;
 import com.fatec.leilaoEletronicoLp2.models.Cliente;
 import com.fatec.leilaoEletronicoLp2.models.DispositivoInformatica;
 import com.fatec.leilaoEletronicoLp2.models.Leilao;
@@ -42,6 +43,11 @@ public class ClienteService {
 	
 	public ResponseEntity<ClienteDto> save(ClienteForm clienteForm)  {
 		
+		Cliente cliente = clienteRepository.findBycliCpf(clienteForm.getCliCpf()); 
+		
+		if(cliente != null) {
+			throw new ClienteJaCadastradoException("Já existe cliente cadastrado com o cpf: " + clienteForm.getCliCpf());
+		}
 
 		Cliente clienteNovo = new Cliente(
 				clienteForm.getCliCpf(),
