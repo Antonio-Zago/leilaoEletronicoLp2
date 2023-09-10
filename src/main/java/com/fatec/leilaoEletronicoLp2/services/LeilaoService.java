@@ -13,7 +13,11 @@ import org.springframework.stereotype.Service;
 
 import com.fatec.leilaoEletronicoLp2.dtos.LeilaoDto;
 import com.fatec.leilaoEletronicoLp2.dtos.LeilaoForm;
+import com.fatec.leilaoEletronicoLp2.exceptions.DispositivosInformaticaTemLancesException;
+import com.fatec.leilaoEletronicoLp2.exceptions.LeilaoSemEntidadesFinanceirasAssociadas;
+import com.fatec.leilaoEletronicoLp2.models.EntidadeFinanceira;
 import com.fatec.leilaoEletronicoLp2.models.Leilao;
+import com.fatec.leilaoEletronicoLp2.repositorys.EntidadesFinanceirasRepository;
 import com.fatec.leilaoEletronicoLp2.repositorys.LeilaoRepository;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -23,6 +27,9 @@ public class LeilaoService {
 	
 	@Autowired
 	private LeilaoRepository leilaoRepository;
+	
+	@Autowired
+	private EntidadesFinanceirasRepository entidadesFinanceirasRepository;
 	
 
 	
@@ -50,6 +57,18 @@ public class LeilaoService {
 	
 	public ResponseEntity<LeilaoDto> save(LeilaoForm leilaoForm) {
 		
+		if(leilaoForm.getIdEntidadesFinanceiras().isEmpty()) {
+			throw new LeilaoSemEntidadesFinanceirasAssociadas("Necessário informar ao menos uma entidade financeira para o leilão!!!");
+		}
+		
+		List<EntidadeFinanceira> entidadeFinanceiras = new ArrayList<EntidadeFinanceira>();
+		
+		for (Integer idEntidadeFinanceira : leilaoForm.getIdEntidadesFinanceiras()) {
+			EntidadeFinanceira entidadeFinanceira = entidadesFinanceirasRepository.findById(idEntidadeFinanceira).orElseThrow(() -> new EntityNotFoundException("Não encontrado registro de id: " + idEntidadeFinanceira + " na classe: " + EntidadeFinanceira.class.toString() ));;
+			entidadeFinanceiras.add(entidadeFinanceira);
+		}
+		
+		
 		
 		Leilao leilao = new Leilao(
 				leilaoForm.getLeiDataOcorrencia(),
@@ -57,7 +76,8 @@ public class LeilaoService {
 				leilaoForm.getLeiEndereco(),
 				leilaoForm.getLeiCidade(),
 				leilaoForm.getLeiestado(),
-				leilaoForm.getLeiEnderecoWeb()
+				leilaoForm.getLeiEnderecoWeb(),
+				entidadeFinanceiras
 				);
 		
 		
@@ -65,6 +85,17 @@ public class LeilaoService {
 	}
 	
 	public ResponseEntity<LeilaoDto>  update(LeilaoForm leilaoForm, Integer id) {
+		
+		if(leilaoForm.getIdEntidadesFinanceiras().isEmpty()) {
+			throw new LeilaoSemEntidadesFinanceirasAssociadas("Necessário informar ao menos uma entidade financeira para o leilão!!!");
+		}
+		
+		List<EntidadeFinanceira> entidadeFinanceiras = new ArrayList<EntidadeFinanceira>();
+		
+		for (Integer idEntidadeFinanceira : leilaoForm.getIdEntidadesFinanceiras()) {
+			EntidadeFinanceira entidadeFinanceira = entidadesFinanceirasRepository.findById(idEntidadeFinanceira).orElseThrow(() -> new EntityNotFoundException("Não encontrado registro de id: " + idEntidadeFinanceira + " na classe: " + EntidadeFinanceira.class.toString() ));;
+			entidadeFinanceiras.add(entidadeFinanceira);
+		}
 		
 		Leilao leilao = leilaoRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Não encontrado registro de id: " + id + " na classe: " + Leilao.class.toString() ));                   
 		
@@ -75,6 +106,7 @@ public class LeilaoService {
 		leilao.setLeiEndereco(leilaoForm.getLeiEndereco());
 		leilao.setLeiEnderecoWeb(leilaoForm.getLeiEnderecoWeb());
 		leilao.setLeiEstado(leilaoForm.getLeiestado());
+		leilao.setEntidadesFinanceiras(entidadeFinanceiras);
 		
 		return ResponseEntity.ok().body(converteParaDto(leilaoRepository.save(leilao)));
 	}
@@ -89,6 +121,13 @@ public class LeilaoService {
 	}
 	
 	private LeilaoDto converteParaDto(Leilao leilao) {
+		
+		List<String> entidadeFinanceirasNomes = new ArrayList<String>();
+		
+		for (EntidadeFinanceira entidadeFinanceira : leilao.getEntidadesFinanceiras()) {
+			entidadeFinanceirasNomes.add(entidadeFinanceira.getEntfinNome());
+		}
+		
 		return new LeilaoDto(
 				leilao.getLeiId(),
 				leilao.getLeiDataOcorrencia(),
@@ -96,7 +135,8 @@ public class LeilaoService {
 				leilao.getLeiEndereco(),
 				leilao.getLeiCidade(),
 				leilao.getLeiEstado(),
-				leilao.getLeiEnderecoWeb()
+				leilao.getLeiEnderecoWeb(),
+				entidadeFinanceirasNomes
 		);
 	}
 	

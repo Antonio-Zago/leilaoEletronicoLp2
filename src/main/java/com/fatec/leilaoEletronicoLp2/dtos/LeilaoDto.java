@@ -2,6 +2,7 @@ package com.fatec.leilaoEletronicoLp2.dtos;
 
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 public class LeilaoDto {
 	
@@ -18,12 +19,14 @@ public class LeilaoDto {
 	private String leiestado;
 	
 	private String leiEnderecoWeb;
+	
+	private List<String> entidadesFinanceirasNomes;
 
 	
 	
 	
 	public LeilaoDto(Integer leiId, LocalDateTime leiDataOcorrencia, LocalDateTime leiDataVisitacao, String leiEndereco, String leiCidade,
-			String leiestado, String leiEnderecoWeb) {
+			String leiestado, String leiEnderecoWeb, List<String> entidadesFinanceirasNomes) {
 		super();
 		this.leiId = leiId;
 		this.leiDataOcorrencia = leiDataOcorrencia;
@@ -32,6 +35,7 @@ public class LeilaoDto {
 		this.leiCidade = leiCidade;
 		this.leiestado = leiestado;
 		this.leiEnderecoWeb = leiEnderecoWeb;
+		this.entidadesFinanceirasNomes = entidadesFinanceirasNomes;
 	}
 
 	public Integer getLeiId() {
@@ -89,5 +93,15 @@ public class LeilaoDto {
 	public void setLeiEnderecoWeb(String leiEnderecoWeb) {
 		this.leiEnderecoWeb = leiEnderecoWeb;
 	}
+
+	public List<String> getEntidadesFinanceirasNomes() {
+		return entidadesFinanceirasNomes;
+	}
+
+	public void setEntidadesFinanceirasNomes(List<String> entidadesFinanceirasNomes) {
+		this.entidadesFinanceirasNomes = entidadesFinanceirasNomes;
+	}
+	
+	
 	
 }

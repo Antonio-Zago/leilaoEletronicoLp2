@@ -1,9 +1,12 @@
 package com.fatec.leilaoEletronicoLp2.models;
 
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -15,6 +18,20 @@ public class EntidadeFinanceira {
 	private Integer entfinId;
 	
 	private String entfinNome;
+	
+	@ManyToMany(mappedBy = "entidadesFinanceiras")
+	private List<Leilao> leiloes;
+	
+	public EntidadeFinanceira() {}
+	
+	
+
+	public EntidadeFinanceira(String entfinNome) {
+		super();
+		this.entfinNome = entfinNome;
+	}
+
+
 
 	public Integer getEntfinId() {
 		return entfinId;
@@ -31,6 +48,20 @@ public class EntidadeFinanceira {
 	public void setEntfinNome(String entfinNome) {
 		this.entfinNome = entfinNome;
 	}
+
+
+
+	public List<Leilao> getLeiloes() {
+		return leiloes;
+	}
+
+
+
+	public void setLeiloes(List<Leilao> leiloes) {
+		this.leiloes = leiloes;
+	}
+	
+	
 	
 	
 }

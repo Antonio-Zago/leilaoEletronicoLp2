@@ -1,25 +1,35 @@
-package com.fatec.leilaoEletronicoLp2.models;
+package com.fatec.leilaoEletronicoLp2.dtos;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "VEICULOS")
-public class Veiculos {
+public class VeiculosDto {
 	
-	public Veiculos() {}
-	
-	
-	
-	public Veiculos(String veiPlaca, String veiMarca, Integer veiAnoFabricacao, Double veiDistanciaRodada,
-			String veiCambio, String veiCombustivel, String veiCor, Double veiPeso, TiposVeiculos tipoVeiculo,
-			Leilao leilao) {
+	private Integer veiId;
+
+	private String veiPlaca;
+
+    private String veiMarca;
+
+    private Integer veiAnoFabricacao;
+
+    private Double veiDistanciaRodada;
+
+    private String veiCambio;
+
+    private String veiCombustivel;
+
+    private String veiCor;
+
+    private Double veiPeso;
+    
+    
+
+
+    public VeiculosDto(Integer veiId, String veiPlaca, String veiMarca, Integer veiAnoFabricacao,
+			Double veiDistanciaRodada, String veiCambio, String veiCombustivel, String veiCor, Double veiPeso,
+			String nomeTipoVeiculo, LocalDateTime leilaoDataOcorrencia) {
 		super();
+		this.veiId = veiId;
 		this.veiPlaca = veiPlaca;
 		this.veiMarca = veiMarca;
 		this.veiAnoFabricacao = veiAnoFabricacao;
@@ -28,49 +38,13 @@ public class Veiculos {
 		this.veiCombustivel = veiCombustivel;
 		this.veiCor = veiCor;
 		this.veiPeso = veiPeso;
-		this.tipoVeiculo = tipoVeiculo;
-		this.leilao = leilao;
+		this.nomeTipoVeiculo = nomeTipoVeiculo;
+		this.leilaoDataOcorrencia = leilaoDataOcorrencia;
 	}
 
-
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer veiId;
-	
-	private String veiPlaca;
-	
-	private String veiMarca;
-	
-	private Integer veiAnoFabricacao;
-	
-	private Double veiDistanciaRodada;
-	
-	private String veiCambio;
-	
-	private String veiCombustivel;
-	
-	private String veiCor;
-	
-	private Double veiPeso;
-	
-	@ManyToOne
-	@JoinColumn(name = "tipo_veiculo")
-	private TiposVeiculos tipoVeiculo;
-	
-	@ManyToOne
-	@JoinColumn(name = "leilao")
-	private Leilao leilao;
-	
-	
-
-	public Leilao getLeilao() {
-		return leilao;
-	}
-
-	public void setLeilao(Leilao leilao) {
-		this.leilao = leilao;
-	}
+	private String nomeTipoVeiculo;
+    
+    private LocalDateTime leilaoDataOcorrencia;
 
 	public Integer getVeiId() {
 		return veiId;
@@ -144,13 +118,23 @@ public class Veiculos {
 		this.veiPeso = veiPeso;
 	}
 
-	public TiposVeiculos getTipoVeiculo() {
-		return tipoVeiculo;
+	public String getNomeTipoVeiculo() {
+		return nomeTipoVeiculo;
 	}
 
-	public void setTipoVeiculo(TiposVeiculos tipoVeiculo) {
-		this.tipoVeiculo = tipoVeiculo;
+	public void setNomeTipoVeiculo(String nomeTipoVeiculo) {
+		this.nomeTipoVeiculo = nomeTipoVeiculo;
 	}
-	
-	
+
+	public LocalDateTime getLeilaoDataOcorrencia() {
+		return leilaoDataOcorrencia;
+	}
+
+	public void setLeilaoDataOcorrencia(LocalDateTime leilaoDataOcorrencia) {
+		this.leilaoDataOcorrencia = leilaoDataOcorrencia;
+	}
+    
+    
+    
+    
 }
