@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.domain.Sort.Order;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -32,6 +35,17 @@ public class LeilaoService {
 	
 	public ResponseEntity<List<LeilaoDto>> getAll(){
 		List<Leilao> leiloes= leilaoRepository.findAll();
+		
+		List<LeilaoDto> leiloesDtos = new ArrayList<LeilaoDto>();
+		
+		for (Leilao leilao : leiloes) {
+			leiloesDtos.add(converteParaDto(leilao));
+		}
+		return ResponseEntity.ok().body(leiloesDtos);
+	}
+	
+	public ResponseEntity<List<LeilaoDto>> getAllOrderByDataOcorrencia(){
+		List<Leilao> leiloes = leilaoRepository.findAll(Sort.by(Order.by("leiDataOcorrencia")).descending());
 		
 		List<LeilaoDto> leiloesDtos = new ArrayList<LeilaoDto>();
 		

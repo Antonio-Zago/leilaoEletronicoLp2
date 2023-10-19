@@ -25,36 +25,41 @@ import com.fatec.leilaoEletronicoLp2.services.LeilaoService;
 @RequestMapping("/api/leilao")
 @CrossOrigin(origins="*")
 public class LeiloesController {
+	
+	@Autowired
+	private LeilaoService leilaoService;
+	
+	@GetMapping
+	public ResponseEntity<List<LeilaoDto>> getAll() {
 
-    @Autowired
-    private LeilaoService leilaoService;
-
-    @GetMapping
-    public ResponseEntity<List<LeilaoDto>> getAll() {
-
-        return leilaoService.getAll();
-    }
-
-    @PostMapping
-    public ResponseEntity<LeilaoDto> save(@RequestBody LeilaoForm leilaoForm) {
-
-
-        return leilaoService.save(leilaoForm);
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<LeilaoDto> update(@RequestBody LeilaoForm leilaoForm, @PathVariable Integer id) {
-        return leilaoService.update(leilaoForm, id);
-    }
-
-    @DeleteMapping("/{id}")
-    public void delete(@PathVariable Integer id) {
-        leilaoService.delete(id);
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<LeilaoDto> getById(@PathVariable Integer id){
-        return leilaoService.getById(id);
-    }
+		return leilaoService.getAll();
+	}
+	
+	@GetMapping(value = "/dataOcorrencia")
+	public ResponseEntity<List<LeilaoDto>> getAllOrderByDataOcorrencia(){
+		return leilaoService.getAllOrderByDataOcorrencia();
+	}
+	
+	@PostMapping
+	public ResponseEntity<LeilaoDto> save(@RequestBody LeilaoForm leilaoForm) {
+		
+		
+		return leilaoService.save(leilaoForm);
+	}
+	
+	@PutMapping("/{id}")
+	public ResponseEntity<LeilaoDto> update(@RequestBody LeilaoForm leilaoForm, @PathVariable Integer id) {
+		return leilaoService.update(leilaoForm, id);
+	}
+	
+	@DeleteMapping("/{id}")
+	public void delete(@PathVariable Integer id) {
+		leilaoService.delete(id);
+	}
+	
+	@GetMapping("/{id}")
+	public ResponseEntity<LeilaoDto> getById(@PathVariable Integer id){
+		return leilaoService.getById(id);
+	}
 
 }

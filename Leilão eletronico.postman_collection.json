@@ -36,7 +36,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"diArmazenamento\":1000,\r\n    \"diMemoria\" : 1000,\r\n    \"diNumeroportas\" : 5,\r\n    \"diTensao\" : 220,\r\n    \"tipoDi\" : 1,\r\n    \"diEnderecoFisico\" : \"ADBSBUA\",\r\n    \"diMarca\" : \"LG\",\r\n    \"diProcessador\" : \"Xenon\",\r\n    \"diTela\" : \"22 polegadas\",\r\n    \"leilao\" : 2\r\n}",
+							"raw": "{\r\n    \"diArmazenamento\":1000,\r\n    \"diMemoria\" : 1000,\r\n    \"diNumeroportas\" : 5,\r\n    \"diTensao\" : 220,\r\n    \"tipoDi\" : 1,\r\n    \"diEnderecoFisico\" : \"ADBSBUA\",\r\n    \"diMarca\" : \"LG\",\r\n    \"diProcessador\" : \"Xenon\",\r\n    \"diTela\" : \"22 polegadas\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -64,7 +64,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/dispositivosinformatica/1",
+							"raw": "http://localhost:8080/api/dispositivosinformatica/5",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -73,7 +73,7 @@
 							"path": [
 								"api",
 								"dispositivosinformatica",
-								"1"
+								"5"
 							]
 						}
 					},
@@ -83,20 +83,7 @@
 					"name": "GetById",
 					"request": {
 						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/api/dispositivosinformatica/2",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"dispositivosinformatica",
-								"2"
-							]
-						}
+						"header": []
 					},
 					"response": []
 				},
@@ -107,7 +94,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"diArmazenamento\":2000,\r\n    \"diMemoria\" : 1000,\r\n    \"diNumeroportas\" : 5,\r\n    \"diTensao\" : 220,\r\n    \"tipoDi\" : 1,\r\n    \"diEnderecoFisico\" : \"adsadsa\",\r\n    \"diMarca\" : \"asdasd\",\r\n    \"diProcessador\" : \"Xenon\",\r\n    \"diTela\" : \"22 polegadas\",\r\n    \"leilao\" : 2\r\n}",
+							"raw": "{\r\n    \"diArmazenamento\":2000,\r\n    \"diMemoria\" : 1000,\r\n    \"diNumeroportas\" : 5,\r\n    \"diTensao\" : 220,\r\n    \"tipoDi\" : 1,\r\n    \"diEnderecoFisico\" : \"adsadsa\",\r\n    \"diMarca\" : \"asdasd\",\r\n    \"diProcessador\" : \"Xenon\",\r\n    \"diTela\" : \"22 polegadas\",\r\n    \"leilao\" : 1\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -115,7 +102,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/dispositivosinformatica/1",
+							"raw": "http://localhost:8080/api/dispositivosinformatica/5",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -124,7 +111,7 @@
 							"path": [
 								"api",
 								"dispositivosinformatica",
-								"1"
+								"5"
 							]
 						}
 					},
@@ -142,7 +129,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"leiDataOcorrencia\": \"2025-09-02T15:10:00\",\r\n    \"leiDataVisitacao\": \"2022-12-11T09:30:00\",\r\n    \"leiEndereco\" : \"Rua pindaiba\",\r\n    \"leiCidade\" : \"jacapau\",\r\n    \"leiestado\" : \"Sp\",\r\n    \"leiEnderecoWeb\" : \"ola.com\",\r\n    \"idEntidadesFinanceiras\" : [1]\r\n}",
+							"raw": "{\r\n    \"leiDataOcorrencia\": \"2025-09-02T15:10:00\",\r\n    \"leiDataVisitacao\": \"2022-12-11T09:30:00\",\r\n    \"leiEndereco\" : \"Rua pindaiba\",\r\n    \"leiCidade\" : \"jacapau\",\r\n    \"leiestado\" : \"Sp\",\r\n    \"leiEnderecoWeb\" : \"ola.com\",\r\n    \"idEntidadesFinanceiras\" : [1,2]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -168,19 +155,7 @@
 					"name": "GetAll",
 					"request": {
 						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/api/leilao",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"leilao"
-							]
-						}
+						"header": []
 					},
 					"response": []
 				},
@@ -191,7 +166,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"leiDataOcorrencia\": \"2025-09-02T15:10:00\",\r\n    \"leiDataVisitacao\": \"2022-12-11T09:30:00\",\r\n    \"leiEndereco\" : \"Rua pindaiba2\",\r\n    \"leiCidade\" : \"Jacapau\",\r\n    \"leiestado\" : \"Sp\",\r\n    \"leiEnderecoWeb\" : \"tchau.com\",\r\n    \"idEntidadesFinanceiras\" : [1]\r\n}",
+							"raw": "{\r\n    \"leiDataOcorrencia\": \"2023-12-11T08:10:00.000+00:00\",\r\n    \"leiDataVisitacao\": \"2023-12-11T09:30:00.000+00:00\",\r\n    \"leiEndereco\" : \"Rua pindaiba2\",\r\n    \"leiCidade\" : \"Jacapau\",\r\n    \"leiestado\" : \"Sp\",\r\n    \"leiEnderecoWeb\" : \"tchau.com\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -218,6 +193,14 @@
 					"name": "GetById",
 					"request": {
 						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
 						"header": [],
 						"url": {
 							"raw": "http://localhost:8080/api/leilao/1",
@@ -230,27 +213,6 @@
 								"api",
 								"leilao",
 								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/api/leilao/2",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"leilao",
-								"2"
 							]
 						}
 					},
@@ -367,7 +329,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/cliente/12345678",
+							"raw": "http://localhost:8080/api/cliente/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -376,7 +338,7 @@
 							"path": [
 								"api",
 								"cliente",
-								"12345678"
+								"1"
 							]
 						}
 					},
@@ -443,7 +405,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/lanceDi",
+							"raw": "http://localhost:8080/api/cliente",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -451,7 +413,7 @@
 							"port": "8080",
 							"path": [
 								"api",
-								"lanceDi"
+								"cliente"
 							]
 						}
 					},
@@ -514,7 +476,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/lanceDi/2",
+							"raw": "http://localhost:8080/api/cliente/12345678",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -522,8 +484,8 @@
 							"port": "8080",
 							"path": [
 								"api",
-								"lanceDi",
-								"2"
+								"cliente",
+								"12345678"
 							]
 						}
 					},
@@ -541,7 +503,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"entfinNome\": \"Itaú\"\r\n}",
+							"raw": "{\r\n    \"leiDataOcorrencia\": \"2024-09-02T15:10:00\",\r\n    \"leiDataVisitacao\": \"2022-12-11T09:30:00\",\r\n    \"leiEndereco\" : \"Rua pindaiba\",\r\n    \"leiCidade\" : \"jacapau\",\r\n    \"leiestado\" : \"Sp\",\r\n    \"leiEnderecoWeb\" : \"ola.com\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -549,7 +511,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/entidadesFinanceiras",
+							"raw": "http://localhost:8080/api/leilao",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -557,7 +519,7 @@
 							"port": "8080",
 							"path": [
 								"api",
-								"entidadesFinanceiras"
+								"leilao"
 							]
 						}
 					},
@@ -567,19 +529,7 @@
 					"name": "GetAll",
 					"request": {
 						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/api/entidadesFinanceiras",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"entidadesFinanceiras"
-							]
-						}
+						"header": []
 					},
 					"response": []
 				},
@@ -590,7 +540,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"entfinNome\": \"itaú\"\r\n}",
+							"raw": "{\r\n    \"leiDataOcorrencia\": \"2023-12-11T08:10:00.000+00:00\",\r\n    \"leiDataVisitacao\": \"2023-12-11T09:30:00.000+00:00\",\r\n    \"leiEndereco\" : \"Rua pindaiba2\",\r\n    \"leiCidade\" : \"Jacapau\",\r\n    \"leiestado\" : \"Sp\",\r\n    \"leiEnderecoWeb\" : \"tchau.com\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -598,7 +548,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/entidadesFinanceiras/1",
+							"raw": "http://localhost:8080/api/leilao/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -606,7 +556,7 @@
 							"port": "8080",
 							"path": [
 								"api",
-								"entidadesFinanceiras",
+								"leilao",
 								"1"
 							]
 						}
@@ -617,20 +567,7 @@
 					"name": "GetById",
 					"request": {
 						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/api/entidadesFinanceiras/1",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"entidadesFinanceiras",
-								"1"
-							]
-						}
+						"header": []
 					},
 					"response": []
 				},
@@ -640,7 +577,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/entidadesFinanceiras/1",
+							"raw": "http://localhost:8080/api/leilao/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -648,7 +585,7 @@
 							"port": "8080",
 							"path": [
 								"api",
-								"entidadesFinanceiras",
+								"leilao",
 								"1"
 							]
 						}
@@ -667,7 +604,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"veiPlaca\": \"ABC123\",\r\n    \"veiMarca\": \"Gm\",\r\n    \"veiAnoFabricacao\" : 2012,\r\n    \"veiDistanciaRodada\" : 20000.00,\r\n    \"veiCambio\" : \"Manual\",\r\n    \"veiCombustivel\" : \"Flex\",\r\n    \"veiCor\" : \"Cinza\",\r\n    \"veiPeso\": 10000,\r\n    \"tipoVeiculo\" : 1,\r\n    \"leilao\" : 1\r\n}",
+							"raw": "{\r\n    \"veiPlaca\": \"ABC123\",\r\n    \"vaiMarca\": \"Gm\",\r\n    \"veiAnoFabricacao\" : 2012,\r\n    \"veiDistanciaRodada\" : 20000.00,\r\n    \"veiCambio\" : \"Manual\",\r\n    \"veiCombustivel\" : \"Flex\",\r\n    \"veiCor\" : \"Cinza\",\r\n    \"veiPeso\": 10000,\r\n    \"tipoVeiculo\" : 1,\r\n    \"leilao\" : 1\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -716,7 +653,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"veiPlaca\": \"ABC123\",\r\n    \"veiMarca\": \"Gm\",\r\n    \"veiAnoFabricacao\" : 2020,\r\n    \"veiDistanciaRodada\" : 200000.00,\r\n    \"veiCambio\" : \"Automático\",\r\n    \"veiCombustivel\" : \"Gasolina\",\r\n    \"veiCor\" : \"Preto\",\r\n    \"veiPeso\": 20000,\r\n    \"tipoVeiculo\" : 2,\r\n    \"leilao\" : 3\r\n}",
+							"raw": "{\r\n    \"veiPlaca\": \"ABC123\",\r\n    \"veiMarca\": \"Gm\",\r\n    \"veiAnoFabricacao\" : 2020,\r\n    \"veiDistanciaRodada\" : 200000.00,\r\n    \"veiCambio\" : \"Automático\",\r\n    \"veiCombustivel\" : \"Gasolina\",\r\n    \"veiCor\" : \"Preto\",\r\n    \"veiPeso\": 20000,\r\n    \"tipoVeiculo\" : 2,\r\n    \"leilao\" : 1\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -842,7 +779,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"valorLance\": 3000.0,\r\n    \"cpfCliente\": \"12345678\",\r\n    \"veiculo\" : 1\r\n}",
+							"raw": "{\r\n    \"valorLance\": 2000.0,\r\n    \"cpfCliente\": \"12345678\",\r\n    \"veiculo\" : 1\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -850,7 +787,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/lanceVeiculos/2",
+							"raw": "http://localhost:8080/api/lanceVeiculos/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -859,7 +796,7 @@
 							"path": [
 								"api",
 								"lanceVeiculos",
-								"2"
+								"1"
 							]
 						}
 					},
@@ -871,7 +808,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/lanceVeiculos/2",
+							"raw": "http://localhost:8080/api/lanceVeiculos/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -880,7 +817,7 @@
 							"path": [
 								"api",
 								"lanceVeiculos",
-								"2"
+								"1"
 							]
 						}
 					},
