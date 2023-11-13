@@ -1,6 +1,7 @@
 package com.fatec.leilaoEletronicoLp2.models;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
 
@@ -32,6 +33,8 @@ public class Leilao {
 	private String leiEstado;
 	
 	private String leiEnderecoWeb;
+
+
 	
 	@ManyToMany
     @JoinTable(
@@ -122,7 +125,25 @@ public class Leilao {
 	public void setLeiEnderecoWeb(String leiEnderecoWeb) {
 		this.leiEnderecoWeb = leiEnderecoWeb;
 	}
-	
-	
 
+
+	private LocalTime horarioInicio;
+	private LocalTime horarioFim;
+
+	public Leilao(LocalTime horarioInicio, LocalTime horarioFim) {
+		this.horarioInicio = horarioInicio;
+		this.horarioFim = horarioFim;
+	}
+
+	public String getStatus() {
+		LocalTime horarioAtual = LocalTime.now();
+
+		if (horarioAtual.isBefore(horarioInicio)) {
+			return "EM ABERTO";
+		} else if (horarioAtual.isAfter(horarioInicio) && horarioAtual.isBefore(horarioFim)) {
+			return "EM ANDAMENTO";
+		} else {
+			return "FINALIZADO";
+		}
+	}
 }
