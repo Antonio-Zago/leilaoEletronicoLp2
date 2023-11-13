@@ -2,6 +2,8 @@ package com.fatec.leilaoEletronicoLp2.services;
 
 
 
+import com.fatec.leilaoEletronicoLp2.dtos.DispositivoInformaticaDetalhadoDto;
+import com.fatec.leilaoEletronicoLp2.dtos.VeiculoDetalhadoDto;
 import com.fatec.leilaoEletronicoLp2.dtos.VeiculosDto;
 import com.fatec.leilaoEletronicoLp2.dtos.VeiculosForm;
 import com.fatec.leilaoEletronicoLp2.exceptions.DispositivosInformaticaTemLancesException;
@@ -128,6 +130,46 @@ public class VeiculosService {
     public void delete(Integer id) {
 
         veiculosRepository.deleteById(id);
+    }
+    
+    public ResponseEntity<VeiculoDetalhadoDto> getByIdDetails(Integer id){
+		
+		Veiculos veiculo = veiculosRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Não encontrado registro de id: " + id + " na classe: " + Veiculos.class.toString()));
+		
+		VeiculoDetalhadoDto detalhadoDto = converteParaDtoDetalhado(veiculo);
+		
+		Leilao leilao = leilaoRepository.findById(veiculo.getLeilao().getLeiId()).orElseThrow(() -> new EntityNotFoundException("Não encontrado registro de id: " + veiculo.getLeilao().getLeiId() + " na classe: " + Leilao.class.toString()));
+		LocalDateTime dataAtual = LocalDateTime.now();
+		
+		ClienteVeiculos maiorLance = clienteVeiculoRepository.findClienteWithHighestLance();
+		
+		if(maiorLance != null) {
+			detalhadoDto.setMaiorLance(maiorLance.getCliveiValorLance());  
+			detalhadoDto.setNomeClienteMaiorLance(maiorLance.getCliente().getCliNome()); 
+		}
+		
+		detalhadoDto.setLeilaoAberto(dataAtual.isBefore(leilao.getLeiDataOcorrencia()));
+
+		
+		
+		return ResponseEntity.ok().body(detalhadoDto);
+	}
+    
+    public VeiculoDetalhadoDto converteParaDtoDetalhado(Veiculos veiculos) {
+        return new VeiculoDetalhadoDto(
+        		veiculos.getVeiId(),
+        		veiculos.getVeiPlaca(),
+        		veiculos.getVeiMarca(),
+        		veiculos.getVeiAnoFabricacao(),
+        		veiculos.getVeiDistanciaRodada(),
+        		veiculos.getVeiCambio(),
+        		veiculos.getVeiCombustivel(),
+        		veiculos.getVeiCor(),
+        		veiculos.getVeiPeso(),
+        		veiculos.getTipoVeiculo().getTveiNome(),
+        		veiculos.getLeilao().getLeiDataOcorrencia()
+        );
+        
     }
 
     public VeiculosDto converteParaDto(Veiculos veiculos) {

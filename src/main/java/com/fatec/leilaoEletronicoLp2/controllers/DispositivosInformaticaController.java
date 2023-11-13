@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fatec.leilaoEletronicoLp2.dtos.DispositivoInformaticaDetalhadoDto;
 import com.fatec.leilaoEletronicoLp2.dtos.DispositivoInformaticaDto;
 import com.fatec.leilaoEletronicoLp2.dtos.DispositivoInformaticaForm;
 import com.fatec.leilaoEletronicoLp2.models.DispositivoInformatica;
@@ -54,6 +55,11 @@ public class DispositivosInformaticaController {
 	@GetMapping("/{id}")
 	public ResponseEntity<DispositivoInformaticaDto> getById(@PathVariable Integer id){
 		return dispositivosInformaticaService.getById(id);
+	}
+	
+	@GetMapping("/detalhes/{id}")
+	public ResponseEntity<DispositivoInformaticaDetalhadoDto> getByIdDetails(@PathVariable Integer id){
+		return dispositivosInformaticaService.getByIdDetails(id);
 	}
 	
 }

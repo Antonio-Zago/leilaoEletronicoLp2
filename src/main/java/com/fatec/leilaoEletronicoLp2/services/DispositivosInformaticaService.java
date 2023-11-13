@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.fatec.leilaoEletronicoLp2.dtos.DispositivoInformaticaDetalhadoDto;
 import com.fatec.leilaoEletronicoLp2.dtos.DispositivoInformaticaDto;
 import com.fatec.leilaoEletronicoLp2.dtos.DispositivoInformaticaForm;
 import com.fatec.leilaoEletronicoLp2.exceptions.DefaultError;
@@ -131,6 +132,46 @@ public class DispositivosInformaticaService {
 	public ResponseEntity<DispositivoInformaticaDto> getById(Integer id){
 		return ResponseEntity.ok().body(converteParaDto(dispositivosInformaticaRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Não encontrado registro de id: " + id + " na classe: " + DispositivoInformatica.class.toString()))));
 	}
+	
+	public ResponseEntity<DispositivoInformaticaDetalhadoDto> getByIdDetails(Integer id){
+		
+		DispositivoInformatica dispositivoInformatica = dispositivosInformaticaRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Não encontrado registro de id: " + id + " na classe: " + DispositivoInformatica.class.toString()));
+		
+		DispositivoInformaticaDetalhadoDto detalhadoDto = converteParaDtoDetalhado(dispositivoInformatica);
+		
+		Leilao leilao = leilaoRepository.findById(dispositivoInformatica.getLeilao().getLeiId()).orElseThrow(() -> new EntityNotFoundException("Não encontrado registro de id: " + dispositivoInformatica.getLeilao().getLeiId() + " na classe: " + Leilao.class.toString()));
+		LocalDateTime dataAtual = LocalDateTime.now();
+		
+		ClienteDispositivoInformatica maiorLance = clienteDispositivoInformaticaRepository.findClienteWithHighestLance();
+		
+		if(maiorLance != null) {
+			detalhadoDto.setMaiorLance(maiorLance.getClidiValorLance());  
+			detalhadoDto.setNomeClienteMaiorLance(maiorLance.getCliente().getCliNome()); 
+		}
+		
+		detalhadoDto.setLeilaoAberto(dataAtual.isBefore(leilao.getLeiDataOcorrencia()));
+
+		
+		
+		return ResponseEntity.ok().body(detalhadoDto);
+	}
+	
+	
+	private DispositivoInformaticaDetalhadoDto converteParaDtoDetalhado(DispositivoInformatica dispositivoInformatica) {
+		return new DispositivoInformaticaDetalhadoDto(
+				dispositivoInformatica.getDiId(),
+				dispositivoInformatica.getDiEnderecoFisico(),
+				dispositivoInformatica.getDiMarca(),
+				dispositivoInformatica.getDiProcessador(),
+				dispositivoInformatica.getDiTela(),
+				dispositivoInformatica.getDiArmazenamento(),
+				dispositivoInformatica.getDiMemoria(),
+				dispositivoInformatica.getDiTensao(),
+				dispositivoInformatica.getDiNumeroPortas(),
+				dispositivoInformatica.getTipoDi().getTdiNome(),
+				dispositivoInformatica.getLeilao().getLeiDataOcorrencia());
+	}
+	
 	
 	private DispositivoInformaticaDto converteParaDto(DispositivoInformatica dispositivoInformatica) {
 		return new DispositivoInformaticaDto(

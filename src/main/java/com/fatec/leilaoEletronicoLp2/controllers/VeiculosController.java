@@ -1,5 +1,7 @@
 package com.fatec.leilaoEletronicoLp2.controllers;
 
+import com.fatec.leilaoEletronicoLp2.dtos.DispositivoInformaticaDetalhadoDto;
+import com.fatec.leilaoEletronicoLp2.dtos.VeiculoDetalhadoDto;
 import com.fatec.leilaoEletronicoLp2.dtos.VeiculosDto;
 import com.fatec.leilaoEletronicoLp2.dtos.VeiculosForm;
 import com.fatec.leilaoEletronicoLp2.services.VeiculosService;
@@ -44,5 +46,10 @@ public class VeiculosController {
     public ResponseEntity<VeiculosDto> getById(@PathVariable Integer id) {
         return veiculosService.getById(id);
     }
+    
+    @GetMapping("/detalhes/{id}")
+	public ResponseEntity<VeiculoDetalhadoDto> getByIdDetails(@PathVariable Integer id){
+		return veiculosService.getByIdDetails(id);
+	}
 
 }
