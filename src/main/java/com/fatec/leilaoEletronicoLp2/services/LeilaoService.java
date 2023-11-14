@@ -79,7 +79,8 @@ public class LeilaoService {
 				leilaoForm.getLeiCidade(),
 				leilaoForm.getLeiestado(),
 				leilaoForm.getLeiEnderecoWeb(),
-				entidadeFinanceiras
+				entidadeFinanceiras,
+				leilaoForm.getLeiHoraFim()
 				);
 		
 		
@@ -109,6 +110,7 @@ public class LeilaoService {
 		leilao.setLeiEnderecoWeb(leilaoForm.getLeiEnderecoWeb());
 		leilao.setLeiEstado(leilaoForm.getLeiestado());
 		leilao.setEntidadesFinanceiras(entidadeFinanceiras);
+		leilao.setLeiDataHorafim(leilaoForm.getLeiHoraFim());
 		
 		return ResponseEntity.ok().body(converteParaDto(leilaoRepository.save(leilao)));
 	}

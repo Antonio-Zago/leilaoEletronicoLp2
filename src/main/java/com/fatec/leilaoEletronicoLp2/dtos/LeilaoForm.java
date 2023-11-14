@@ -1,6 +1,7 @@
 package com.fatec.leilaoEletronicoLp2.dtos;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
 
@@ -19,10 +20,24 @@ public class LeilaoForm {
 	private String leiEnderecoWeb;
 	
 	private List<Integer> idEntidadesFinanceiras;
+	
+	private LocalDateTime leiHoraFim;
+	
+	
 
 	
 	
 	
+    
+
+
+	public LocalDateTime getLeiHoraFim() {
+		return leiHoraFim;
+	}
+
+	public void setLeiHoraFim(LocalDateTime leiHoraFim) {
+		this.leiHoraFim = leiHoraFim;
+	}
 
 	public List<Integer> getIdEntidadesFinanceiras() {
 		return idEntidadesFinanceiras;

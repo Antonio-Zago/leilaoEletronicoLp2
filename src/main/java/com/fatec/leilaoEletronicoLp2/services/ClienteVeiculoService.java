@@ -13,6 +13,8 @@ import com.fatec.leilaoEletronicoLp2.dtos.ClienteDispositivoInformaticaForm;
 import com.fatec.leilaoEletronicoLp2.dtos.ClienteVeiculoDto;
 import com.fatec.leilaoEletronicoLp2.dtos.ClienteVeiculoForm;
 import com.fatec.leilaoEletronicoLp2.dtos.VeiculosDto;
+import com.fatec.leilaoEletronicoLp2.exceptions.GenericException;
+import com.fatec.leilaoEletronicoLp2.exceptions.LeilaoFechadoException;
 import com.fatec.leilaoEletronicoLp2.models.Cliente;
 import com.fatec.leilaoEletronicoLp2.models.ClienteDispositivoInformatica;
 import com.fatec.leilaoEletronicoLp2.models.ClienteVeiculos;
@@ -40,6 +42,8 @@ public class ClienteVeiculoService {
 	
 
 	
+
+	
 	public ResponseEntity<List<ClienteVeiculoDto>> getAll(){
 		List<ClienteVeiculos> clienteVeiculos = clienteVeiculoRepository.findAll();
 		
@@ -57,12 +61,37 @@ public class ClienteVeiculoService {
 		
 		Veiculos veiculos = veiculosRepository.findById(clienteVeiculoForm.getVeiculo()).orElseThrow(() -> new EntityNotFoundException("Não encontrado registro de id: " + clienteVeiculoForm.getVeiculo() + " na classe: " + Veiculos.class.toString() ));
 
-		ClienteVeiculos clienteVeiculos = new ClienteVeiculos(
-				veiculos,
-				cliente,
-				clienteVeiculoForm.getValorLance(),
-				LocalDateTime.now()
-				);
+		ClienteVeiculos clienteVeiculos = new ClienteVeiculos();
+		
+		
+		
+		if(veiculos.getLeilao().getLeiDataOcorrencia().isBefore(LocalDateTime.now()) && veiculos.getLeilao().getLeiDataHorafim().isAfter(LocalDateTime.now())) {
+			
+			ClienteVeiculos  maiorLance = clienteVeiculoRepository.findClienteWithHighestLance();
+			
+			List<ClienteVeiculos> lances = clienteVeiculoRepository.findByveiculo(veiculos);
+			
+			if(!lances.isEmpty()) {
+				if(maiorLance.getCliveiValorLance() >= clienteVeiculoForm.getValorLance()) {
+					throw new GenericException("Valor do lance menor ou igual ao atual!");
+				}
+				if(maiorLance.getCliente().getCliCpf() == cliente.getCliCpf()) {
+					throw new GenericException("Maior lance já é do seu useário!");
+				}
+			}
+			
+			
+			
+			clienteVeiculos.setCliveiValorLance(clienteVeiculoForm.getValorLance());		
+			clienteVeiculos.setCliente(cliente);	
+			clienteVeiculos.setVeiculo(veiculos);		
+			clienteVeiculos.setClidiDataHoraLance(LocalDateTime.now());		
+			
+		}
+		else {
+			throw new LeilaoFechadoException("O leilão está fechado !!!");
+		}
+	
 		
 		
 		return ResponseEntity.ok().body(converteParaDto(clienteVeiculoRepository.save(clienteVeiculos)));

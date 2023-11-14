@@ -63,4 +63,18 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler{
 		DefaultError erro = new DefaultError(HttpStatus.UNPROCESSABLE_ENTITY.value(), e.getMessage());
 		return new ResponseEntity<DefaultError>(erro, HttpStatus.UNPROCESSABLE_ENTITY);
 	}
+	
+	@ExceptionHandler(LeilaoFechadoException.class)
+	public ResponseEntity<DefaultError> leilaoFechado(LeilaoFechadoException e, HttpServletRequest request) {
+		
+		DefaultError erro = new DefaultError(HttpStatus.UNPROCESSABLE_ENTITY.value(), e.getMessage());
+		return new ResponseEntity<DefaultError>(erro, HttpStatus.UNPROCESSABLE_ENTITY);
+	}
+	
+	@ExceptionHandler(GenericException.class)
+	public ResponseEntity<DefaultError> generic(GenericException e, HttpServletRequest request) {
+		
+		DefaultError erro = new DefaultError(HttpStatus.UNPROCESSABLE_ENTITY.value(), e.getMessage());
+		return new ResponseEntity<DefaultError>(erro, HttpStatus.UNPROCESSABLE_ENTITY);
+	}
 }

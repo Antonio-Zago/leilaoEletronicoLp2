@@ -14,6 +14,9 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
+/**
+ * 
+ */
 @Entity
 @Table(name = "LEILAO")
 public class Leilao {
@@ -36,6 +39,8 @@ public class Leilao {
 
 
 	
+	private LocalDateTime leiDataHorafim;
+	
 	@ManyToMany
     @JoinTable(
     		name="leilao_entidade_financeira",
@@ -47,7 +52,7 @@ public class Leilao {
 	
 	
 	public Leilao(LocalDateTime leiDataOcorrencia, LocalDateTime leiDataVisitacao, String leiEndereco, String leiCidade, String leiEstado,
-			String leiEnderecoWeb, List<EntidadeFinanceira> entidadeFinanceiras) {
+			String leiEnderecoWeb, List<EntidadeFinanceira> entidadeFinanceiras, LocalDateTime horaFim) {
 		super();
 		this.leiDataOcorrencia = leiDataOcorrencia;
 		this.leiDataVisitacao = leiDataVisitacao;
@@ -56,9 +61,23 @@ public class Leilao {
 		this.leiEstado = leiEstado;
 		this.leiEnderecoWeb = leiEnderecoWeb;
 		this.entidadesFinanceiras = entidadeFinanceiras;
+		this.leiDataHorafim = horaFim;
 	}
 	
 	
+	
+
+
+
+	public LocalDateTime getLeiDataHorafim() {
+		return leiDataHorafim;
+	}
+
+
+	public void setLeiDataHorafim(LocalDateTime leiDataHorafim) {
+		this.leiDataHorafim = leiDataHorafim;
+	}
+
 
 	public List<EntidadeFinanceira> getEntidadesFinanceiras() {
 		return entidadesFinanceiras;
