@@ -16,9 +16,7 @@ import lombok.Setter;
 
 
 @Entity
-@Getter
-@Setter
-@AllArgsConstructor
+
 
 @Table(name = "CLIENTE_DISPOSITIVO_INFORMATICA")
 public class ClienteDispositivoInformatica {
