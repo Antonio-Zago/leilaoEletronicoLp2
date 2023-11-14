@@ -2,7 +2,11 @@ package com.fatec.leilaoEletronicoLp2.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
+import com.fatec.leilaoEletronicoLp2.dtos.*;
+import com.fatec.leilaoEletronicoLp2.models.DispositivoInformatica;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
@@ -11,8 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 
-import com.fatec.leilaoEletronicoLp2.dtos.LeilaoDto;
-import com.fatec.leilaoEletronicoLp2.dtos.LeilaoForm;
 import com.fatec.leilaoEletronicoLp2.exceptions.DispositivosInformaticaTemLancesException;
 import com.fatec.leilaoEletronicoLp2.exceptions.LeilaoSemEntidadesFinanceirasAssociadas;
 import com.fatec.leilaoEletronicoLp2.models.EntidadeFinanceira;
@@ -139,6 +141,52 @@ public class LeilaoService {
 				entidadeFinanceirasNomes
 		);
 	}
-	
 
-}
+	public LeilaoDetalhesDto getDetalhes(Integer id) {
+		Leilao leilao = leilaoRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Não encontrado registro de id: " + id + " na classe: " + Leilao.class.toString()));
+
+		return new LeilaoDetalhesDto(leilao);
+	}
+
+/*	public List<Produto> filtrarProdutos(Integer idLeilao, Double minValorInicial, Double maxValorInicial,
+										 Double minValorFinal, Double maxValorFinal, String palavraChave, String tipoProduto) {
+		Leilao leilao = leilaoRepository.findById(idLeilao)
+				.orElseThrow(() -> new EntityNotFoundException("Leilão não encontrado"));
+
+		List<Produto> produtos = leilao.getProdutos(); // Supondo que Leilao tenha uma lista de produtos
+
+		// Filtrar por faixa de valores do lance inicial
+		produtos = produtos.stream()
+				.filter(produto -> produto.getValorInicial() >= minValorInicial && produto.getValorInicial() <= maxValorInicial)
+				.collect(Collectors.toList());
+
+		// Filtrar por faixa de valores considerando lances adicionais
+		produtos = produtos.stream()
+				.filter(produto -> produto.getValorFinal() >= minValorFinal && produto.getValorFinal() <= maxValorFinal)
+				.collect(Collectors.toList());
+
+		// Filtrar por palavra-chave no nome do produto
+		produtos = produtos.stream()
+				.filter(produto -> produto.getNome().contains(palavraChave))
+				.collect(Collectors.toList());
+
+		// Filtrar por tipo de produto
+		if (tipoProduto != null && !tipoProduto.isEmpty()) {
+			produtos = produtos.stream()
+					.filter(produto -> produto.getTipo().equalsIgnoreCase(tipoProduto))
+					.collect(Collectors.toList());
+		}
+
+		return produtos;
+	}*/
+
+	public String getStatusById(Integer id) {
+		Leilao leilao = leilaoRepository.findById(id)
+				.orElseThrow(() -> new EntityNotFoundException("Leilão não encontrado"));
+
+		return leilao.getStatus();
+	}
+
+	}
+
+

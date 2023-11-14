@@ -2,22 +2,11 @@ package com.fatec.leilaoEletronicoLp2.controllers;
 
 import java.util.List;
 
+import com.fatec.leilaoEletronicoLp2.dtos.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.fatec.leilaoEletronicoLp2.dtos.DispositivoInformaticaDto;
-import com.fatec.leilaoEletronicoLp2.dtos.DispositivoInformaticaForm;
-import com.fatec.leilaoEletronicoLp2.dtos.LeilaoDto;
-import com.fatec.leilaoEletronicoLp2.dtos.LeilaoForm;
 import com.fatec.leilaoEletronicoLp2.services.DispositivosInformaticaService;
 import com.fatec.leilaoEletronicoLp2.services.LeilaoService;
 
@@ -62,4 +51,30 @@ public class LeiloesController {
 		return leilaoService.getById(id);
 	}
 
+	@GetMapping("/{id}/detalhes")
+	public ResponseEntity<LeilaoDetalhesDto> getDetalhes(@PathVariable Integer id) {
+		LeilaoDetalhesDto detalhes = leilaoService.getDetalhes(id);
+		return ResponseEntity.ok(detalhes);
+	}
+
+/*
+	@GetMapping("/{id}/produtos")
+	public ResponseEntity<List<Produto>> filtrarProdutos(@PathVariable Integer id,
+														 @RequestParam(required = false) Double minValorInicial,
+														 @RequestParam(required = false) Double maxValorInicial,
+														 @RequestParam(required = false) Double minValorFinal,
+														 @RequestParam(required = false) Double maxValorFinal,
+														 @RequestParam(required = false) String palavraChave,
+														 @RequestParam(required = false) String tipoProduto) {
+		List<Produto> produtos = leilaoService.filtrarProdutos(id, minValorInicial, maxValorInicial,
+				minValorFinal, maxValorFinal, palavraChave, tipoProduto);
+		return ResponseEntity.ok().body(produtos);
+	}
+*/
+
+	@GetMapping("/{id}/status")
+	public ResponseEntity<String> getStatus(@PathVariable Integer id) {
+		String status = leilaoService.getStatusById(id);
+		return ResponseEntity.ok().body(status);
+	}
 }
