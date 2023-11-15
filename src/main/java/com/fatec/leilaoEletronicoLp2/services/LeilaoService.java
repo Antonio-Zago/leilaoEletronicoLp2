@@ -70,39 +70,79 @@ public class LeilaoService {
 		return ResponseEntity.ok().body(leiloesDtos);
 	}
 	
-	public ResponseEntity<List<DispositivoInformaticaDto>> getAllWithParams(Integer id, Double valorMinimoInicial,Double valorMaximoInicial,Double valorMinimo,Double valorMaximo,String palavraChave,Integer categoria, Integer tipoProduto){
+	public ResponseEntity<List<ProdutoDto>> getAllWithParams(Integer id, Double valorMinimoInicial,Double valorMaximoInicial,Double valorMinimo,Double valorMaximo,String palavraChave,Integer categoria, Integer tipoProduto){
 		Leilao leilao= leilaoRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Não encontrado registro de id: " + id + " na classe: " + Leilao.class.toString()));
 		
-		String consulta = "SELECT DISTINCT DI.* "
-				+ "FROM DISPOSITIVOS_INFORMATICA DI "
-				+ "INNER JOIN (SELECT CLIDI_VALOR_LANCE, DISPOSITIVO_INFORMATICA, MIN(CLIDI_DATA_HORA_LANCE) AS DATALANCEINICIAL "
-				+ "FROM CLIENTE_DISPOSITIVO_INFORMATICA GROUP BY DISPOSITIVO_INFORMATICA, CLIDI_VALOR_LANCE) LANCE "
-				+ "ON LANCE.DISPOSITIVO_INFORMATICA = DI.DI_ID "
-				+ "INNER JOIN CLIENTE_DISPOSITIVO_INFORMATICA CLIDI ON CLIDI.DISPOSITIVO_INFORMATICA = DI.DI_ID "
-				+ "INNER JOIN LEILAO LEI ON LEI.LEI_ID = DI.LEILAO "
-				+ "WHERE LEI.LEI_ID = :parametro1 "
-				+ "AND LANCE.CLIDI_VALOR_LANCE >= :parametro2 AND LANCE.CLIDI_VALOR_LANCE <= :parametro3 "
-				+ "AND CLIDI.CLIDI_VALOR_LANCE >= :parametro4 AND CLIDI.CLIDI_VALOR_LANCE <= :parametro5 "
-				+ "AND DI.TIPO_DI = :parametro6 "
-				+ "AND DI.DI_MARCA LIKE '%" +palavraChave+ "%'";
+		List<ProdutoDto> dtos = new ArrayList<ProdutoDto>();
 		
-		Query query = entityManager.createNativeQuery(consulta, DispositivoInformatica.class);
-        query.setParameter("parametro1", id);
-        query.setParameter("parametro2", valorMinimoInicial);
-        query.setParameter("parametro3", valorMaximoInicial);
-        query.setParameter("parametro4", valorMinimo);
-        query.setParameter("parametro5", valorMaximo);
-        query.setParameter("parametro6", tipoProduto);
-        
-		
-		List<DispositivoInformatica> dispositivoInformaticas = query.getResultList();
-		
-		List<DispositivoInformaticaDto> dtos = new ArrayList<DispositivoInformaticaDto>();
-		
-		for (DispositivoInformatica dispositivoInformatica : dispositivoInformaticas) {
-			DispositivoInformaticaDto dto = new DispositivoInformaticaDto(dispositivoInformatica.getDiId(), dispositivoInformatica.getDiEnderecoFisico(), dispositivoInformatica.getDiMarca(), dispositivoInformatica.getDiProcessador(), dispositivoInformatica.getDiTela(), dispositivoInformatica.getDiArmazenamento(), dispositivoInformatica.getDiMemoria(), dispositivoInformatica.getDiTensao(), dispositivoInformatica.getDiNumeroPortas(), dispositivoInformatica.getTipoDi().getTdiNome(), dispositivoInformatica.getLeilao().getLeiDataOcorrencia());
-			dtos.add(dto);
+		if(categoria == 1) {
+			String consulta = "SELECT DISTINCT DI.* "
+					+ "FROM DISPOSITIVOS_INFORMATICA DI "
+					+ "INNER JOIN (SELECT CLIDI_VALOR_LANCE, DISPOSITIVO_INFORMATICA, MIN(CLIDI_DATA_HORA_LANCE) AS DATALANCEINICIAL "
+					+ "FROM CLIENTE_DISPOSITIVO_INFORMATICA GROUP BY DISPOSITIVO_INFORMATICA, CLIDI_VALOR_LANCE) LANCE "
+					+ "ON LANCE.DISPOSITIVO_INFORMATICA = DI.DI_ID "
+					+ "INNER JOIN CLIENTE_DISPOSITIVO_INFORMATICA CLIDI ON CLIDI.DISPOSITIVO_INFORMATICA = DI.DI_ID "
+					+ "INNER JOIN LEILAO LEI ON LEI.LEI_ID = DI.LEILAO "
+					+ "WHERE LEI.LEI_ID = :parametro1 "
+					+ "AND LANCE.CLIDI_VALOR_LANCE >= :parametro2 AND LANCE.CLIDI_VALOR_LANCE <= :parametro3 "
+					+ "AND CLIDI.CLIDI_VALOR_LANCE >= :parametro4 AND CLIDI.CLIDI_VALOR_LANCE <= :parametro5 "
+					+ "AND DI.TIPO_DI = :parametro6 "
+					+ "AND DI.DI_MARCA LIKE '%" +palavraChave+ "%'";
+			
+			Query query = entityManager.createNativeQuery(consulta, DispositivoInformatica.class);
+	        query.setParameter("parametro1", id);
+	        query.setParameter("parametro2", valorMinimoInicial);
+	        query.setParameter("parametro3", valorMaximoInicial);
+	        query.setParameter("parametro4", valorMinimo);
+	        query.setParameter("parametro5", valorMaximo);
+	        query.setParameter("parametro6", tipoProduto);
+	        
+			
+			List<DispositivoInformatica> dispositivoInformaticas = query.getResultList();
+			
+			
+			
+			for (DispositivoInformatica dispositivoInformatica : dispositivoInformaticas) {
+				ProdutoDto dto = new ProdutoDto();
+				dto.setNome(dispositivoInformatica.getDiMarca());
+				dtos.add(dto);
+			}
 		}
+		else if(categoria == 2) {
+			String consulta = "SELECT DISTINCT DI.* "
+					+ "FROM VEICULOS DI "
+					+ "INNER JOIN (SELECT CLIVEI_VALOR_LANCE, VEICULO, MIN(CLIVEI_VALOR_LANCE) AS DATALANCEINICIAL "
+					+ "FROM CLIENTE_VEICULO GROUP BY VEICULO, CLIVEI_VALOR_LANCE) LANCE "
+					+ "ON LANCE.VEICULO = DI.VEI_ID "
+					+ "INNER JOIN CLIENTE_VEICULO CLIDI ON CLIDI.VEICULO = DI.VEI_ID "
+					+ "INNER JOIN LEILAO LEI ON LEI.LEI_ID = DI.LEILAO "
+					+ "WHERE LEI.LEI_ID = :parametro1 "
+					+ "AND LANCE.CLIVEI_VALOR_LANCE >= :parametro2 AND LANCE.CLIVEI_VALOR_LANCE <= :parametro3 "
+					+ "AND CLIDI.CLIVEI_VALOR_LANCE >= :parametro4 AND CLIDI.CLIVEI_VALOR_LANCE <= :parametro5 "
+					+ "AND DI.TIPO_VEICULO = :parametro6 "
+					+ "AND DI.VEI_MARCA LIKE '%" +palavraChave+ "%'";
+			
+			Query query = entityManager.createNativeQuery(consulta, Veiculos.class);
+	        query.setParameter("parametro1", id);
+	        query.setParameter("parametro2", valorMinimoInicial);
+	        query.setParameter("parametro3", valorMaximoInicial);
+	        query.setParameter("parametro4", valorMinimo);
+	        query.setParameter("parametro5", valorMaximo);
+	        query.setParameter("parametro6", tipoProduto);
+	        
+			
+			List<Veiculos> veiculos = query.getResultList();
+			
+			
+			
+			for (Veiculos veiculo : veiculos) {
+				ProdutoDto dto = new ProdutoDto();
+				dto.setNome(veiculo.getVeiMarca());
+				dtos.add(dto);
+			}
+		}
+		
+		
 		
 		
 		

@@ -27,7 +27,7 @@ public class LeiloesController {
 	}
 	
 	@GetMapping(value = "/param/{id}")
-	public ResponseEntity<List<DispositivoInformaticaDto>> getAllWithParams( @PathVariable Integer id, @RequestParam(required = false) Double valorMinimoInicial, @RequestParam(required = false)  Double valorMaximoInicial, @RequestParam(required = false)  Double valorMinimo, @RequestParam(required = false)  Double valorMaximo, @RequestParam(required = false)  String palavraChave, @RequestParam(required = false)  Integer categoria,@RequestParam(required = false)  Integer tipoProduto) {
+	public ResponseEntity<List<ProdutoDto>> getAllWithParams( @PathVariable Integer id, @RequestParam(required = false) Double valorMinimoInicial, @RequestParam(required = false)  Double valorMaximoInicial, @RequestParam(required = false)  Double valorMinimo, @RequestParam(required = false)  Double valorMaximo, @RequestParam(required = false)  String palavraChave, @RequestParam(required = false)  Integer categoria,@RequestParam(required = false)  Integer tipoProduto) {
 
 		return leilaoService.getAllWithParams(id, valorMinimoInicial,valorMaximoInicial,valorMinimo,valorMaximo,palavraChave,categoria, tipoProduto);
 	}
