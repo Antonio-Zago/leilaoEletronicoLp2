@@ -32,17 +32,5 @@ public class LeilaoDto {
 	
 	private String leiEnderecoWeb;
 	
-	private List<String> entidadesFinanceirasNomes;
-
-
-
-
-
-
-
-
-
-
-
-
+	private List<String> entidadesFinanceirasNomesgit ;
 }

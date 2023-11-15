@@ -2,6 +2,7 @@ package com.fatec.leilaoEletronicoLp2.controllers;
 
 import java.util.List;
 
+import com.fatec.leilaoEletronicoLp2.dtos.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -14,10 +15,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fatec.leilaoEletronicoLp2.dtos.ClienteDispositivoInformaticaDto;
-import com.fatec.leilaoEletronicoLp2.dtos.ClienteDispositivoInformaticaForm;
-import com.fatec.leilaoEletronicoLp2.dtos.ClienteDto;
-import com.fatec.leilaoEletronicoLp2.dtos.ClienteForm;
 import com.fatec.leilaoEletronicoLp2.services.ClienteDispositivoInformaticaService;
 import com.fatec.leilaoEletronicoLp2.services.ClienteService;
 
@@ -57,4 +54,18 @@ public class ClienteDispositivoInformaticaController {
 	public ResponseEntity<ClienteDispositivoInformaticaDto> getById(@PathVariable Integer id){
 		return clienteDispositivoInformaticaService.getById(id);
 	}
+
+
+	@GetMapping("/historico-lances/{id}")
+	public ResponseEntity<List<ClienteDispositivoInformaticaDto>> getHistoricoLancesDispositivo(@PathVariable Integer id) {
+		List<ClienteDispositivoInformaticaDto> historicoLances = clienteDispositivoInformaticaService.getHistoricoLancesDispositivo(id);
+
+		if (historicoLances.isEmpty()) {
+			return ResponseEntity.notFound().build();
+		}
+
+		return ResponseEntity.ok(historicoLances);
+	}
+
+
 }
