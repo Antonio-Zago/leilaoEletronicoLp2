@@ -142,7 +142,7 @@ public class DispositivosInformaticaService {
 		Leilao leilao = leilaoRepository.findById(dispositivoInformatica.getLeilao().getLeiId()).orElseThrow(() -> new EntityNotFoundException("Não encontrado registro de id: " + dispositivoInformatica.getLeilao().getLeiId() + " na classe: " + Leilao.class.toString()));
 		LocalDateTime dataAtual = LocalDateTime.now();
 		
-		ClienteDispositivoInformatica maiorLance = clienteDispositivoInformaticaRepository.findClienteWithHighestLance();
+		ClienteDispositivoInformatica maiorLance = clienteDispositivoInformaticaRepository.findClienteWithHighestLance(dispositivoInformatica.getDiId());
 		
 		if(maiorLance != null) {
 			detalhadoDto.setMaiorLance(maiorLance.getClidiValorLance());  

@@ -22,12 +22,16 @@ import com.fatec.leilaoEletronicoLp2.exceptions.LeilaoSemEntidadesFinanceirasAss
 import com.fatec.leilaoEletronicoLp2.models.EntidadeFinanceira;
 import com.fatec.leilaoEletronicoLp2.models.Leilao;
 import com.fatec.leilaoEletronicoLp2.models.Veiculos;
+import com.fatec.leilaoEletronicoLp2.repositorys.ClienteDispositivoInformaticaRepository;
+import com.fatec.leilaoEletronicoLp2.repositorys.ClienteVeiculoRepository;
 import com.fatec.leilaoEletronicoLp2.repositorys.DispositivosInformaticaRepository;
 import com.fatec.leilaoEletronicoLp2.repositorys.EntidadesFinanceirasRepository;
 import com.fatec.leilaoEletronicoLp2.repositorys.LeilaoRepository;
 import com.fatec.leilaoEletronicoLp2.repositorys.VeiculosRepository;
 
+import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.persistence.Query;
 
 @Service
 public class LeilaoService {
@@ -35,7 +39,8 @@ public class LeilaoService {
 	@Autowired
 	private LeilaoRepository leilaoRepository;
 	
-
+	@Autowired
+    private EntityManager entityManager;
 	
 	@Autowired
 	private EntidadesFinanceirasRepository entidadesFinanceirasRepository;
@@ -45,6 +50,12 @@ public class LeilaoService {
 	
 	@Autowired
 	private DispositivosInformaticaRepository dispositivosInformaticaRepository;
+	
+	@Autowired
+	private ClienteVeiculoRepository clienteVeiculoRepository;
+	
+	@Autowired
+	private ClienteDispositivoInformaticaRepository clienteDispositivoInformaticaRepository;
 	
 
 	
@@ -58,6 +69,47 @@ public class LeilaoService {
 		}
 		return ResponseEntity.ok().body(leiloesDtos);
 	}
+	
+	public ResponseEntity<List<DispositivoInformaticaDto>> getAllWithParams(Integer id, Double valorMinimoInicial,Double valorMaximoInicial,Double valorMinimo,Double valorMaximo,String palavraChave,Integer categoria, Integer tipoProduto){
+		Leilao leilao= leilaoRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Não encontrado registro de id: " + id + " na classe: " + Leilao.class.toString()));
+		
+		String consulta = "SELECT DISTINCT DI.* "
+				+ "FROM DISPOSITIVOS_INFORMATICA DI "
+				+ "INNER JOIN (SELECT CLIDI_VALOR_LANCE, DISPOSITIVO_INFORMATICA, MIN(CLIDI_DATA_HORA_LANCE) AS DATALANCEINICIAL "
+				+ "FROM CLIENTE_DISPOSITIVO_INFORMATICA GROUP BY DISPOSITIVO_INFORMATICA, CLIDI_VALOR_LANCE) LANCE "
+				+ "ON LANCE.DISPOSITIVO_INFORMATICA = DI.DI_ID "
+				+ "INNER JOIN CLIENTE_DISPOSITIVO_INFORMATICA CLIDI ON CLIDI.DISPOSITIVO_INFORMATICA = DI.DI_ID "
+				+ "INNER JOIN LEILAO LEI ON LEI.LEI_ID = DI.LEILAO "
+				+ "WHERE LEI.LEI_ID = :parametro1 "
+				+ "AND LANCE.CLIDI_VALOR_LANCE >= :parametro2 AND LANCE.CLIDI_VALOR_LANCE <= :parametro3 "
+				+ "AND CLIDI.CLIDI_VALOR_LANCE >= :parametro4 AND CLIDI.CLIDI_VALOR_LANCE <= :parametro5 "
+				+ "AND DI.TIPO_DI = :parametro6 "
+				+ "AND DI.DI_MARCA LIKE '%" +palavraChave+ "%'";
+		
+		Query query = entityManager.createNativeQuery(consulta, DispositivoInformatica.class);
+        query.setParameter("parametro1", id);
+        query.setParameter("parametro2", valorMinimoInicial);
+        query.setParameter("parametro3", valorMaximoInicial);
+        query.setParameter("parametro4", valorMinimo);
+        query.setParameter("parametro5", valorMaximo);
+        query.setParameter("parametro6", tipoProduto);
+        
+		
+		List<DispositivoInformatica> dispositivoInformaticas = query.getResultList();
+		
+		List<DispositivoInformaticaDto> dtos = new ArrayList<DispositivoInformaticaDto>();
+		
+		for (DispositivoInformatica dispositivoInformatica : dispositivoInformaticas) {
+			DispositivoInformaticaDto dto = new DispositivoInformaticaDto(dispositivoInformatica.getDiId(), dispositivoInformatica.getDiEnderecoFisico(), dispositivoInformatica.getDiMarca(), dispositivoInformatica.getDiProcessador(), dispositivoInformatica.getDiTela(), dispositivoInformatica.getDiArmazenamento(), dispositivoInformatica.getDiMemoria(), dispositivoInformatica.getDiTensao(), dispositivoInformatica.getDiNumeroPortas(), dispositivoInformatica.getTipoDi().getTdiNome(), dispositivoInformatica.getLeilao().getLeiDataOcorrencia());
+			dtos.add(dto);
+		}
+		
+		
+		
+		return ResponseEntity.ok().body(dtos);
+	}
+	
+	
 	
 	public ResponseEntity<List<LeilaoDto>> getAllOrderByDataOcorrencia(){
 		List<Leilao> leiloes = leilaoRepository.findAll(Sort.by(Order.by("leiDataOcorrencia")).descending());

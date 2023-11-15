@@ -19,8 +19,11 @@ public interface ClienteDispositivoInformaticaRepository extends JpaRepository<C
 
 	List<ClienteDispositivoInformatica> findByclidiIdOrderByClidiIdAsc(Integer id);
 	
-	@Query("SELECT cdi FROM ClienteDispositivoInformatica cdi WHERE cdi.clidiValorLance = (SELECT MAX(cdi2.clidiValorLance) FROM ClienteDispositivoInformatica cdi2)")
-	ClienteDispositivoInformatica findClienteWithHighestLance();
+	@Query(value = "SELECT cdi.* FROM Cliente_Dispositivo_Informatica cdi WHERE "
+			+ "cdi.dispositivo_informatica = ?1 AND "
+			+ "cdi.clidi_Valor_Lance = (SELECT MAX(cdi2.clidi_Valor_Lance) FROM Cliente_Dispositivo_Informatica cdi2)", nativeQuery = true)
+	ClienteDispositivoInformatica findClienteWithHighestLance(Integer idProduto);
+
 
 
 

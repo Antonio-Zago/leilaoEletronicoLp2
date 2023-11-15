@@ -63,17 +63,20 @@ public class ClienteDispositivoInformaticaService {
 		
 		if(dispositivoInformatica.getLeilao().getLeiDataOcorrencia().isBefore(LocalDateTime.now()) && dispositivoInformatica.getLeilao().getLeiDataHorafim().isAfter(LocalDateTime.now())) {
 			
-			ClienteDispositivoInformatica  maiorLance = clienteDispositivosInformaticaRepository.findClienteWithHighestLance();
+			ClienteDispositivoInformatica  maiorLance = clienteDispositivosInformaticaRepository.findClienteWithHighestLance(dispositivoInformatica.getDiId());
 			
 			List<ClienteDispositivoInformatica> lances = clienteDispositivosInformaticaRepository.findBydispositivoInformatica(dispositivoInformatica);
 			
 			if(!lances.isEmpty()) {
-				if(maiorLance.getClidiValorLance() >= clienteDispositivoInformaticaForm.getValor()) {
-					throw new GenericException("Valor do lance menor ou igual ao atual!");
+				if(maiorLance != null) {
+					if(maiorLance.getClidiValorLance() >= clienteDispositivoInformaticaForm.getValor()) {
+						throw new GenericException("Valor do lance menor ou igual ao atual!");
+					}
+					if(maiorLance.getCliente().getCliCpf() == cliente.getCliCpf()) {
+						throw new GenericException("Maior lance já é do seu usuário!");
+					}
 				}
-				if(maiorLance.getCliente().getCliCpf() == cliente.getCliCpf()) {
-					throw new GenericException("Maior lance já é do seu usuário!");
-				}
+				
 			}
 			
 			

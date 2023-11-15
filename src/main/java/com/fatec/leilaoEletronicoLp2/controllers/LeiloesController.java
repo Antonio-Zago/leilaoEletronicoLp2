@@ -3,6 +3,8 @@ package com.fatec.leilaoEletronicoLp2.controllers;
 import java.util.List;
 
 import com.fatec.leilaoEletronicoLp2.dtos.*;
+import com.fatec.leilaoEletronicoLp2.models.DispositivoInformatica;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +24,12 @@ public class LeiloesController {
 	public ResponseEntity<List<LeilaoDto>> getAll() {
 
 		return leilaoService.getAll();
+	}
+	
+	@GetMapping(value = "/param/{id}")
+	public ResponseEntity<List<DispositivoInformaticaDto>> getAllWithParams( @PathVariable Integer id, @RequestParam(required = false) Double valorMinimoInicial, @RequestParam(required = false)  Double valorMaximoInicial, @RequestParam(required = false)  Double valorMinimo, @RequestParam(required = false)  Double valorMaximo, @RequestParam(required = false)  String palavraChave, @RequestParam(required = false)  Integer categoria,@RequestParam(required = false)  Integer tipoProduto) {
+
+		return leilaoService.getAllWithParams(id, valorMinimoInicial,valorMaximoInicial,valorMinimo,valorMaximo,palavraChave,categoria, tipoProduto);
 	}
 	
 	@GetMapping(value = "/dataOcorrencia")
