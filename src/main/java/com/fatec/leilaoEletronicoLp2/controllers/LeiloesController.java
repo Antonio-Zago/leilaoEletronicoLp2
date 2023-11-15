@@ -51,7 +51,7 @@ public class LeiloesController {
 		return leilaoService.getById(id);
 	}
 
-	@GetMapping("/{id}/detalhes")
+	@GetMapping("detalhes/{id}")
 	public ResponseEntity<LeilaoDetalhesDto> getDetalhes(@PathVariable Integer id) {
 		LeilaoDetalhesDto detalhes = leilaoService.getDetalhes(id);
 		return ResponseEntity.ok(detalhes);

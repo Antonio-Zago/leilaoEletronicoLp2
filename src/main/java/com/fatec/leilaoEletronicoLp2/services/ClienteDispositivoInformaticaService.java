@@ -80,7 +80,7 @@ public class ClienteDispositivoInformaticaService {
 					throw new GenericException("Valor do lance menor ou igual ao atual!");
 				}
 				if(maiorLance.getCliente().getCliCpf() == cliente.getCliCpf()) {
-					throw new GenericException("Maior lance já é do seu useário!");
+					throw new GenericException("Maior lance já é do seu usuário!");
 				}
 			}
 			
