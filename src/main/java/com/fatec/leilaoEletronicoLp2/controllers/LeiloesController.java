@@ -57,20 +57,6 @@ public class LeiloesController {
 		return ResponseEntity.ok(detalhes);
 	}
 
-/*
-	@GetMapping("/{id}/produtos")
-	public ResponseEntity<List<Produto>> filtrarProdutos(@PathVariable Integer id,
-														 @RequestParam(required = false) Double minValorInicial,
-														 @RequestParam(required = false) Double maxValorInicial,
-														 @RequestParam(required = false) Double minValorFinal,
-														 @RequestParam(required = false) Double maxValorFinal,
-														 @RequestParam(required = false) String palavraChave,
-														 @RequestParam(required = false) String tipoProduto) {
-		List<Produto> produtos = leilaoService.filtrarProdutos(id, minValorInicial, maxValorInicial,
-				minValorFinal, maxValorFinal, palavraChave, tipoProduto);
-		return ResponseEntity.ok().body(produtos);
-	}
-*/
 
 	@GetMapping("/{id}/status")
 	public ResponseEntity<String> getStatus(@PathVariable Integer id) {

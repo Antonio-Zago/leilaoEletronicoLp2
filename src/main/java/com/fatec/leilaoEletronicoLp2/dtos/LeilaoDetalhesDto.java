@@ -23,17 +23,44 @@ public class LeilaoDetalhesDto {
     private String leiestado;
     private String leiEnderecoWeb;
     private List<String> entidadesFinanceirasNomes;
+    private List<String> nomeProdutos;
+    private LocalDateTime leiDataHoraFim;
+    private Integer leiTotalProdutos;
+    
+    
+    
+    
 
-    // New lists for vehicles, electronic devices, and clients
-    private List<Veiculos> veiculos;
-    private List<DispositivoInformatica> dispositivosInformatica;
-    private List<Cliente> clientes;
-    private List<ClienteVeiculos> clientesVeiculos;
 
 
-    public LeilaoDetalhesDto(Leilao leilao) {
-        // Initialize your lists here if needed
-    }
+	public Integer getLeiTotalProdutos() {
+		return leiTotalProdutos;
+	}
+
+
+	public void setLeiTotalProdutos(Integer leiTotalProdutos) {
+		this.leiTotalProdutos = leiTotalProdutos;
+	}
+
+
+	public LocalDateTime getLeiDataHoraFim() {
+		return leiDataHoraFim;
+	}
+
+
+	public void setLeiDataHoraFim(LocalDateTime leiDataHoraFim) {
+		this.leiDataHoraFim = leiDataHoraFim;
+	}
+
+
+	public List<String> getNomeProdutos() {
+		return nomeProdutos;
+	}
+
+
+	public void setNomeProdutos(List<String> nomeProdutos) {
+		this.nomeProdutos = nomeProdutos;
+	}
 
 
 	public Integer getLeiId() {
@@ -116,44 +143,9 @@ public class LeilaoDetalhesDto {
 	}
 
 
-	public List<Veiculos> getVeiculos() {
-		return veiculos;
-	}
 
 
-	public void setVeiculos(List<Veiculos> veiculos) {
-		this.veiculos = veiculos;
-	}
 
 
-	public List<DispositivoInformatica> getDispositivosInformatica() {
-		return dispositivosInformatica;
-	}
-
-
-	public void setDispositivosInformatica(List<DispositivoInformatica> dispositivosInformatica) {
-		this.dispositivosInformatica = dispositivosInformatica;
-	}
-
-
-	public List<Cliente> getClientes() {
-		return clientes;
-	}
-
-
-	public void setClientes(List<Cliente> clientes) {
-		this.clientes = clientes;
-	}
-
-
-	public List<ClienteVeiculos> getClientesVeiculos() {
-		return clientesVeiculos;
-	}
-
-
-	public void setClientesVeiculos(List<ClienteVeiculos> clientesVeiculos) {
-		this.clientesVeiculos = clientesVeiculos;
-	}
-    
     
 }

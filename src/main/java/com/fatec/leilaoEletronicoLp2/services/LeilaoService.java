@@ -1,6 +1,8 @@
 package com.fatec.leilaoEletronicoLp2.services;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -19,8 +21,11 @@ import com.fatec.leilaoEletronicoLp2.exceptions.DispositivosInformaticaTemLances
 import com.fatec.leilaoEletronicoLp2.exceptions.LeilaoSemEntidadesFinanceirasAssociadas;
 import com.fatec.leilaoEletronicoLp2.models.EntidadeFinanceira;
 import com.fatec.leilaoEletronicoLp2.models.Leilao;
+import com.fatec.leilaoEletronicoLp2.models.Veiculos;
+import com.fatec.leilaoEletronicoLp2.repositorys.DispositivosInformaticaRepository;
 import com.fatec.leilaoEletronicoLp2.repositorys.EntidadesFinanceirasRepository;
 import com.fatec.leilaoEletronicoLp2.repositorys.LeilaoRepository;
+import com.fatec.leilaoEletronicoLp2.repositorys.VeiculosRepository;
 
 import jakarta.persistence.EntityNotFoundException;
 
@@ -30,8 +35,16 @@ public class LeilaoService {
 	@Autowired
 	private LeilaoRepository leilaoRepository;
 	
+
+	
 	@Autowired
 	private EntidadesFinanceirasRepository entidadesFinanceirasRepository;
+	
+	@Autowired
+	private VeiculosRepository veiculosRepository;
+	
+	@Autowired
+	private DispositivosInformaticaRepository dispositivosInformaticaRepository;
 	
 
 	
@@ -146,8 +159,48 @@ public class LeilaoService {
 
 	public LeilaoDetalhesDto getDetalhes(Integer id) {
 		Leilao leilao = leilaoRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Não encontrado registro de id: " + id + " na classe: " + Leilao.class.toString()));
+		
+		LeilaoDetalhesDto dto = new LeilaoDetalhesDto();
+		
+		List<Veiculos> veiculos = veiculosRepository.findVeiculosByLeilao(id);
+		
+		List<DispositivoInformatica> dis = dispositivosInformaticaRepository.findDiByLeilao(id);
+		
+		List<String> nomesProdutos = new ArrayList<String>();
+		
+		for (DispositivoInformatica dispositivoInformatica : dis) {
+			nomesProdutos.add(dispositivoInformatica.getDiMarca());
 
-		return new LeilaoDetalhesDto(leilao);
+		}
+		for (Veiculos veiculo : veiculos) {
+			nomesProdutos.add(veiculo.getVeiMarca());
+
+		}
+		
+		Collections.sort(nomesProdutos);
+		
+		dto.setNomeProdutos(nomesProdutos);
+		
+		List<String> nomesEntidades = new ArrayList<String>();
+		
+		for (EntidadeFinanceira entidadeFinanceira : leilao.getEntidadesFinanceiras()) {
+			nomesEntidades.add(entidadeFinanceira.getEntfinNome());
+		}
+		
+		dto.setEntidadesFinanceirasNomes(nomesEntidades);
+		dto.setLeiId(leilao.getLeiId());
+		dto.setLeiDataOcorrencia(leilao.getLeiDataOcorrencia());
+		dto.setLeiDataVisitacao(leilao.getLeiDataVisitacao());
+		dto.setLeiEndereco(leilao.getLeiEndereco());
+		dto.setLeiCidade(leilao.getLeiCidade());
+		dto.setLeiestado(leilao.getLeiEstado());
+		dto.setLeiEnderecoWeb(leilao.getLeiEnderecoWeb());
+		dto.setLeiDataHoraFim(leilao.getLeiDataHorafim());
+		dto.setLeiTotalProdutos(nomesProdutos.size());
+	
+		
+		
+		return dto;
 	}
 
 /*	public List<Produto> filtrarProdutos(Integer idLeilao, Double minValorInicial, Double maxValorInicial,
