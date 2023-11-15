@@ -108,14 +108,4 @@ public class LeilaoDto {
 	}
 
 
-
-
-
-
-
-
-
-
-
-
 }

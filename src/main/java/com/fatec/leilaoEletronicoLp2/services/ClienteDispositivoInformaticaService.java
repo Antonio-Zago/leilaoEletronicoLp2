@@ -4,23 +4,15 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fatec.leilaoEletronicoLp2.dtos.*;
+import com.fatec.leilaoEletronicoLp2.exceptions.GenericException;
+import com.fatec.leilaoEletronicoLp2.exceptions.LeilaoFechadoException;
+import com.fatec.leilaoEletronicoLp2.models.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.fatec.leilaoEletronicoLp2.dtos.ClienteDispositivoInformaticaDto;
-import com.fatec.leilaoEletronicoLp2.dtos.ClienteDispositivoInformaticaForm;
-import com.fatec.leilaoEletronicoLp2.dtos.DispositivoInformaticaDto;
-import com.fatec.leilaoEletronicoLp2.dtos.DispositivoInformaticaForm;
-import com.fatec.leilaoEletronicoLp2.exceptions.DispositivosInformaticaTemLancesException;
-import com.fatec.leilaoEletronicoLp2.exceptions.GenericException;
-import com.fatec.leilaoEletronicoLp2.exceptions.LeilaoFechadoException;
-import com.fatec.leilaoEletronicoLp2.models.Cliente;
-import com.fatec.leilaoEletronicoLp2.models.ClienteDispositivoInformatica;
-import com.fatec.leilaoEletronicoLp2.models.ClienteVeiculos;
-import com.fatec.leilaoEletronicoLp2.models.DispositivoInformatica;
-import com.fatec.leilaoEletronicoLp2.models.Leilao;
-import com.fatec.leilaoEletronicoLp2.models.TiposDi;
+
 import com.fatec.leilaoEletronicoLp2.repositorys.ClienteDispositivoInformaticaRepository;
 import com.fatec.leilaoEletronicoLp2.repositorys.ClienteRepository;
 import com.fatec.leilaoEletronicoLp2.repositorys.DispositivosInformaticaRepository;
@@ -127,7 +119,19 @@ public class ClienteDispositivoInformaticaService {
 	public ResponseEntity<ClienteDispositivoInformaticaDto> getById(Integer id){
 		return ResponseEntity.ok().body(converteParaDto(clienteDispositivosInformaticaRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Não encontrado registro de id: " + id + " na classe: " + ClienteDispositivoInformatica.class.toString()))));
 	}
-	
+
+	public List<ClienteDispositivoInformaticaDto> getHistoricoLancesDispositivo(Integer id) {
+		List<ClienteDispositivoInformatica> clienteDispositivoInformaticas = clienteDispositivosInformaticaRepository.findByclidiIdOrderByClidiIdAsc(id);
+
+		List<ClienteDispositivoInformaticaDto> clienteDispositivoInformaticaDtos = new ArrayList<>();
+
+		for (ClienteDispositivoInformatica clienteDispositivoInformatica : clienteDispositivoInformaticas) {
+			clienteDispositivoInformaticaDtos.add(converteParaDto(clienteDispositivoInformatica));
+		}
+
+		return clienteDispositivoInformaticaDtos;
+	}
+
 	public ClienteDispositivoInformaticaDto converteParaDto(ClienteDispositivoInformatica clienteDispositivoInformatica) {
 		return new ClienteDispositivoInformaticaDto(
 				clienteDispositivoInformatica.getClidiId(),

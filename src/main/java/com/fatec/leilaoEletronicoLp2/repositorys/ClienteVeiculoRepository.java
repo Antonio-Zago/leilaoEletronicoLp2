@@ -19,4 +19,7 @@ public interface ClienteVeiculoRepository extends JpaRepository<ClienteVeiculos,
 	@Query("SELECT cdi FROM ClienteVeiculos cdi WHERE cdi.cliveiValorLance = (SELECT MAX(cdi2.cliveiValorLance) FROM ClienteVeiculos cdi2)")
 	ClienteVeiculos findClienteWithHighestLance();
 
+	List<ClienteVeiculos> findBycliveiIdOrderByCliveiIdAsc(Integer id);
+
+
 }
