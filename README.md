@@ -73,7 +73,78 @@
    ![image](https://github.com/Antonio-Zago/leilaoEletronicoLp2/assets/80283126/1048abd1-b0cf-441f-8eb9-d866374de1b5)
 
 
-   
+## :Funcionalidades da Operação do Sistema de Leilão Eletrônico:
+
+**1.** Listagem dos leilões registrados no sistema, ordenados por data de ocorrência;
+
+**Resposta:**
+
+**2.**  Detalhamento de um leilão específico, apresentando seu detalhes (lista de produtos
+ordenado por nome, entidade financeira associada, dados do leilão, quantidade total de
+produtos e demais dados pertinentes ao domínio);
+
+**Resposta:**
+
+**3.** Detalhamento de um produto associado ao leilão, apresentando todos os dados
+pertinentes ao mesmo;
+
+**Resposta:**
+
+
+**4.** Filtro de busca de produtos em um leilão por:
+a. Faixa de valores do lance inicial (min < R$ < max), sendo os valores mínimos e
+máximos informados pelo usuário;
+b. Faixa de valores considerando o lance inicial + lances adicionais (min < R$ < max),
+sendo os valores mínimos e máximos informados pelo usuário;
+c. Palavra chave contida no nome do produto; e
+d. Tipo de produto.
+
+**Resposta:**
+
+
+**5.** Possibilitar a um cliente previamente cadastrado no sistema dar um lance de valor (R$)
+para um produto específico – As devidas validações deverão ser mapeadas e
+implementadas pelos membros do grupo em relação à regras de consistência dos lances
+registrados;
+
+**Resposta:**
+
+
+**6.** Apresentação do histórico de lances realizado para um produto específico, destacando o
+produto, cliente e valor do lance – Ordenação pelo ID do lance correspondente;
+
+**Resposta:**
+
+
+**7.** Sistema deverá automaticamente analisar a faixa de horário do leilão (início e fim), caso
+o mesmo esteja ocorrendo no momento correspondente. Uma vez ultrapassado o
+horário de finalização, ao consultar o detalhamento do leilão, o sistema deverá
+apresentar a relação de produtos acompanhado de seus respectivos clientes
+(ganhadores do leilão, caso o status seja FINALIZADO, senão não deverá apresentar o
+cliente), valor do lance vencedor (R$) e o status de atua do leilão;
+
+**Resposta:**
+
+
+**8.** Todo leilão deverá ter atrelado ao mesmo três status chaves:
+a. EM ABERTO - Para leilões registrados, porém ainda não iniciados;
+b. EM ANDAMENTO - Para leilões registrados, cuja data e faixa de horário do leilão
+estiverem ocorrendo no exato momento de operação do sistema; e
+c. FINALIZADO – Para leilões cujo horário atual ultrapassou os limites da faixa de
+horário registrada para ocorrência do leilão.
+d. Observação: A gestão e tratamento dos status do leilão deverá ser executada
+automaticamente pelo sistema, ou seja, não haverá funcionalidade para indicar
+que o leilão foi registrado, iniciou-se ou foi finalizado. Isso deve ser processado
+com base no horário atual e horários e início e fim do leilão.
+
+**Resposta:**
+
+**9.** O sistema deverá prover também uma funcionalidade de exportação dos detalhes do
+leilão para um arquivo com extensão .DET contendo todas as informações do leilão,
+seus produtos, clientes participantes do leilão, entidade financeira associada e histórico
+de lances de cada produto (estrutura interna do arquivo será JSON).
+
+**Resposta:**   
 
 
 
