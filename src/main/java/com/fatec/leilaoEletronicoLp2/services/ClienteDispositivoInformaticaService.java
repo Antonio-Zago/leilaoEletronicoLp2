@@ -122,6 +122,22 @@ public class ClienteDispositivoInformaticaService {
 	public ResponseEntity<ClienteDispositivoInformaticaDto> getById(Integer id){
 		return ResponseEntity.ok().body(converteParaDto(clienteDispositivosInformaticaRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Não encontrado registro de id: " + id + " na classe: " + ClienteDispositivoInformatica.class.toString()))));
 	}
+	
+	public ResponseEntity<List<ClienteDispositivoInformaticaDto>> getByDispositivoId(Integer id){
+		
+		DispositivoInformatica dispositivoInformatica = dispositivosInformaticaRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Não encontrado registro de id: " + id + " na classe: " + DispositivoInformatica.class.toString() ));
+		
+		List<ClienteDispositivoInformaticaDto> dtos = new ArrayList<ClienteDispositivoInformaticaDto>();
+		
+		for (ClienteDispositivoInformatica clienteDi: clienteDispositivosInformaticaRepository.findBydispositivoInformatica(dispositivoInformatica)) {
+			
+			ClienteDispositivoInformaticaDto dto = converteParaDto(clienteDi);
+			
+			dtos.add(dto);
+		}
+		
+		return ResponseEntity.ok().body(dtos);
+	}
 
 	public List<ClienteDispositivoInformaticaDto> getHistoricoLancesDispositivo(Integer id) {
 		List<ClienteDispositivoInformatica> clienteDispositivoInformaticas = clienteDispositivosInformaticaRepository.findByclidiIdOrderByClidiIdAsc(id);

@@ -54,18 +54,14 @@ public class ClienteDispositivoInformaticaController {
 	public ResponseEntity<ClienteDispositivoInformaticaDto> getById(@PathVariable Integer id){
 		return clienteDispositivoInformaticaService.getById(id);
 	}
-
-
-	@GetMapping("/historico-lances/{id}")
-	public ResponseEntity<List<ClienteDispositivoInformaticaDto>> getHistoricoLancesDispositivo(@PathVariable Integer id) {
-		List<ClienteDispositivoInformaticaDto> historicoLances = clienteDispositivoInformaticaService.getHistoricoLancesDispositivo(id);
-
-		if (historicoLances.isEmpty()) {
-			return ResponseEntity.notFound().build();
-		}
-
-		return ResponseEntity.ok(historicoLances);
+	
+	@GetMapping("historico/{idDispositivo}")
+	public ResponseEntity<List<ClienteDispositivoInformaticaDto>> getByDispositivoId(@PathVariable Integer idDispositivo){
+		return clienteDispositivoInformaticaService.getByDispositivoId(idDispositivo);
 	}
+
+
+
 
 
 }

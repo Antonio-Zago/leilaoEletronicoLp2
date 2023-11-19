@@ -134,7 +134,23 @@ public class ClienteVeiculoService {
 
 		return clienteVeiculoDtos;
 	}
-
+	
+	public ResponseEntity<List<ClienteVeiculoDto>> getByDispositivoId(Integer id){
+		
+		Veiculos veiculo = veiculosRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Não encontrado registro de id: " + id + " na classe: " + Veiculos.class.toString() ));
+		
+		List<ClienteVeiculoDto> dtos = new ArrayList<ClienteVeiculoDto>();
+		
+		for (ClienteVeiculos lances: clienteVeiculoRepository.findByveiculo(veiculo)) {
+			
+			ClienteVeiculoDto dto = converteParaDto(lances);
+			
+			dtos.add(dto);
+		}
+		
+		return ResponseEntity.ok().body(dtos);
+	
+	}
 
 	public ClienteVeiculoDto converteParaDto(ClienteVeiculos clienteVeiculos) {
 		return new ClienteVeiculoDto(

@@ -59,17 +59,11 @@ public class ClienteVeiculoController {
 	}
 
 
-
-	@GetMapping("/historico-lances/{id}")
-	public ResponseEntity<List<ClienteVeiculoDto>> getHistoricoLancesVeiculo(@PathVariable Integer id) {
-		List<ClienteVeiculoDto> historicoLances = clienVeiculoService.getHistoricoLancesVeiculo(id);
-
-		if (historicoLances.isEmpty()) {
-			return ResponseEntity.notFound().build();
-		}
-
-		return ResponseEntity.ok(historicoLances);
+	@GetMapping("historico/{idDispositivo}")
+	public ResponseEntity<List<ClienteVeiculoDto>> getByDispositivoId(@PathVariable Integer idDispositivo){
+		return clienVeiculoService.getByDispositivoId(idDispositivo);
 	}
+
 
 
 
