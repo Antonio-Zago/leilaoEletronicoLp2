@@ -1,5 +1,7 @@
 package com.fatec.leilaoEletronicoLp2.controllers;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
 
 import com.fatec.leilaoEletronicoLp2.dtos.*;
@@ -64,6 +66,40 @@ public class LeiloesController {
 		LeilaoDetalhesDto detalhes = leilaoService.getDetalhes(id);
 		return ResponseEntity.ok(detalhes);
 	}
+	
+	@GetMapping("detalhes/txt/{id}")
+	public String getDetalhesTxt(@PathVariable Integer id) {
+		LeilaoDetalhesTxtDto detalhes = leilaoService.getDetalhestxt(id);
+		
+		boolean sucesso = criarArquivoTxt(detalhes);
+		
+		if (sucesso) {
+            return "Exportação para TXT bem-sucedida!";
+        } else {
+            return "Falha na exportação para TXT.";
+        }
+	}
+	
+	private boolean criarArquivoTxt(LeilaoDetalhesTxtDto objeto) {
+        try (FileWriter writer = new FileWriter("exportacao.txt")) {
+        		writer.write("{ \n");
+        		writer.write("    entidadesFinanceiras : " + objeto.getNomeEntidadeFinanceira() + ", \n");
+        		writer.write("    produtosLeilao : " + objeto.getNomesProdutos() + ", \n");
+        		writer.write("    clientesLeilao : " + objeto.getNomesClientes() + ", \n");
+        		writer.write("    lancesLeilao : " + "[ \n");
+        		for (ProdutosLancesDto lances : objeto.getHistoricoLances()) {
+        			writer.write("    nomeProduto : " + lances.getNome() + ", \n");
+        			writer.write("    valor : " + lances.getValor() + " \n");
+				}
+        		writer.write("] \n");
+        		writer.write("} \n");
+
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
 
 	@GetMapping("/{id}/status")

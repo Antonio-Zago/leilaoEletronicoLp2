@@ -8,6 +8,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import com.fatec.leilaoEletronicoLp2.dtos.*;
+import com.fatec.leilaoEletronicoLp2.models.ClienteDispositivoInformatica;
+import com.fatec.leilaoEletronicoLp2.models.ClienteVeiculos;
 import com.fatec.leilaoEletronicoLp2.models.DispositivoInformatica;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -295,37 +297,70 @@ public class LeilaoService {
 		return dto;
 	}
 
-/*	public List<Produto> filtrarProdutos(Integer idLeilao, Double minValorInicial, Double maxValorInicial,
-										 Double minValorFinal, Double maxValorFinal, String palavraChave, String tipoProduto) {
-		Leilao leilao = leilaoRepository.findById(idLeilao)
-				.orElseThrow(() -> new EntityNotFoundException("Leilão não encontrado"));
-
-		List<Produto> produtos = leilao.getProdutos(); // Supondo que Leilao tenha uma lista de produtos
-
-		// Filtrar por faixa de valores do lance inicial
-		produtos = produtos.stream()
-				.filter(produto -> produto.getValorInicial() >= minValorInicial && produto.getValorInicial() <= maxValorInicial)
-				.collect(Collectors.toList());
-
-		// Filtrar por faixa de valores considerando lances adicionais
-		produtos = produtos.stream()
-				.filter(produto -> produto.getValorFinal() >= minValorFinal && produto.getValorFinal() <= maxValorFinal)
-				.collect(Collectors.toList());
-
-		// Filtrar por palavra-chave no nome do produto
-		produtos = produtos.stream()
-				.filter(produto -> produto.getNome().contains(palavraChave))
-				.collect(Collectors.toList());
-
-		// Filtrar por tipo de produto
-		if (tipoProduto != null && !tipoProduto.isEmpty()) {
-			produtos = produtos.stream()
-					.filter(produto -> produto.getTipo().equalsIgnoreCase(tipoProduto))
-					.collect(Collectors.toList());
+	public LeilaoDetalhesTxtDto getDetalhestxt(Integer id) {
+		Leilao leilao = leilaoRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Não encontrado registro de id: " + id + " na classe: " + Leilao.class.toString()));
+		
+		LeilaoDetalhesTxtDto dto = new LeilaoDetalhesTxtDto();
+		
+		List<Veiculos> veiculos = veiculosRepository.findVeiculosByLeilao(id);
+		
+		List<DispositivoInformatica> dis = dispositivosInformaticaRepository.findDiByLeilao(id);
+		
+		
+		List<String> nomesProdutos = new ArrayList<String>();
+		
+		List<String> nomesClientes = new ArrayList<String>();
+		
+		List<ProdutosLancesDto> lancesDtos = new ArrayList<ProdutosLancesDto>();
+		
+		for (DispositivoInformatica dispositivoInformatica : dis) {
+			nomesProdutos.add(dispositivoInformatica.getDiMarca());
+			List<ClienteDispositivoInformatica> lancesDis = clienteDispositivoInformaticaRepository.findBydispositivoInformatica(dispositivoInformatica);
+			for (ClienteDispositivoInformatica lance : lancesDis) {
+				ProdutosLancesDto produto= new ProdutosLancesDto();
+				produto.setNome(lance.getDispositivoInformatica().getDiMarca());
+				produto.setValor(lance.getClidiValorLance());
+				nomesClientes.add(lance.getCliente().getCliNome());
+				lancesDtos.add(produto);
+			}
+			
+			
 		}
+		for (Veiculos veiculo : veiculos) {
+			nomesProdutos.add(veiculo.getVeiMarca());
+			List<ClienteVeiculos> lancesVeiculos = clienteVeiculoRepository.findByveiculo(veiculo);
+			for (ClienteVeiculos lance : lancesVeiculos) {
+				ProdutosLancesDto produto= new ProdutosLancesDto();
+				produto.setNome(lance.getVeiculo().getVeiMarca());
+				produto.setValor(lance.getCliveiValorLance());
+				nomesClientes.add(lance.getCliente().getCliNome());
+				lancesDtos.add(produto);
+			}
+		}
+		
+		Collections.sort(nomesProdutos);
+		
+		
+		
+		
+		
+		List<String> nomesEntidades = new ArrayList<String>();
+		
+		for (EntidadeFinanceira entidadeFinanceira : leilao.getEntidadesFinanceiras()) {
+			nomesEntidades.add(entidadeFinanceira.getEntfinNome());
+		}
+		
 
-		return produtos;
-	}*/
+		dto.setNomesProdutos(nomesProdutos);
+		dto.setNomesClientes(nomesClientes);
+		dto.setNomeEntidadeFinanceira(nomesEntidades);
+		dto.setHistoricoLances(lancesDtos);
+		
+		
+		
+		
+		return dto;
+	}
 
 	public String getStatusById(Integer id) {
 		Leilao leilao = leilaoRepository.findById(id)
