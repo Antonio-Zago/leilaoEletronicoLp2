@@ -97,6 +97,7 @@ produtos e demais dados pertinentes ao domínio);
 pertinentes ao mesmo;
 
 ![img_2.png](DetalheDoProduto.png)
+
 **Resposta:**
 
 ![img_2.png](DetalhamentoDoProduto2.png)
@@ -119,8 +120,11 @@ para um produto específico – As devidas validações deverão ser mapeadas e
 implementadas pelos membros do grupo em relação à regras de consistência dos lances
 registrados;
 
+![img_2.png](controleVeiculo1.png)
+
 **Resposta:**
 
+![img_2.png](controleLance.png)
 
 **6.** Apresentação do histórico de lances realizado para um produto específico, destacando o
 produto, cliente e valor do lance – Ordenação pelo ID do lance correspondente;
@@ -129,15 +133,8 @@ produto, cliente e valor do lance – Ordenação pelo ID do lance correspondent
 
 **Resposta:**
 
+![img_2.png](historico2.png)
 
-**7.** Sistema deverá automaticamente analisar a faixa de horário do leilão (início e fim), caso
-o mesmo esteja ocorrendo no momento correspondente. Uma vez ultrapassado o
-horário de finalização, ao consultar o detalhamento do leilão, o sistema deverá
-apresentar a relação de produtos acompanhado de seus respectivos clientes
-(ganhadores do leilão, caso o status seja FINALIZADO, senão não deverá apresentar o
-cliente), valor do lance vencedor (R$) e o status de atua do leilão;
-
-**Resposta:**
 
 
 **8.** Todo leilão deverá ter atrelado ao mesmo três status chaves:
@@ -151,7 +148,9 @@ automaticamente pelo sistema, ou seja, não haverá funcionalidade para indicar
 que o leilão foi registrado, iniciou-se ou foi finalizado. Isso deve ser processado
 com base no horário atual e horários e início e fim do leilão.
 
-![img_2.png](statusLeilao.png)
+Este é feito atraves do sistemas indicando se  o Leilão esta encerrado , em andamento ou finalizado
+
+![img_2.png](statusLeilão.png)
 
 **Resposta:**
 

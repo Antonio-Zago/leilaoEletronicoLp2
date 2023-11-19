@@ -102,9 +102,5 @@ public class LeiloesController {
     }
 
 
-	@GetMapping("/{id}/status")
-	public ResponseEntity<String> getStatus(@PathVariable Integer id) {
-		String status = leilaoService.getStatusById(id);
-		return ResponseEntity.ok().body(status);
-	}
+
 }
