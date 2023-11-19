@@ -1,0 +1,7 @@
+{ 
+    entidadesFinanceiras : [Banco do Brasil], 
+    produtosLeilao : [GM - Carro], 
+    clientesLeilao : [], 
+    lancesLeilao : [ 
+] 
+} 

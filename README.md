@@ -96,8 +96,10 @@ produtos e demais dados pertinentes ao domínio);
 **3.** Detalhamento de um produto associado ao leilão, apresentando todos os dados
 pertinentes ao mesmo;
 
+![img_2.png](DetalheDoProduto.png)
 **Resposta:**
 
+![img_2.png](DetalhamentoDoProduto2.png)
 
 **4.** Filtro de busca de produtos em um leilão por:
 a. Faixa de valores do lance inicial (min < R$ < max), sendo os valores mínimos e
@@ -106,6 +108,8 @@ b. Faixa de valores considerando o lance inicial + lances adicionais (min < R$ <
 sendo os valores mínimos e máximos informados pelo usuário;
 c. Palavra chave contida no nome do produto; e
 d. Tipo de produto.
+
+![img_2.png](buscaProduto.png)
 
 **Resposta:**
 
@@ -120,6 +124,8 @@ registrados;
 
 **6.** Apresentação do histórico de lances realizado para um produto específico, destacando o
 produto, cliente e valor do lance – Ordenação pelo ID do lance correspondente;
+
+![img_2.png](historioLanceProduto.png)
 
 **Resposta:**
 
@@ -145,6 +151,8 @@ automaticamente pelo sistema, ou seja, não haverá funcionalidade para indicar
 que o leilão foi registrado, iniciou-se ou foi finalizado. Isso deve ser processado
 com base no horário atual e horários e início e fim do leilão.
 
+![img_2.png](statusLeilao.png)
+
 **Resposta:**
 
 **9.** O sistema deverá prover também uma funcionalidade de exportação dos detalhes do
@@ -152,9 +160,11 @@ leilão para um arquivo com extensão .DET contendo todas as informações do le
 seus produtos, clientes participantes do leilão, entidade financeira associada e histórico
 de lances de cada produto (estrutura interna do arquivo será JSON).
 
+![img_2.png](exportaArquivo.png)
+
 **Resposta:**   
 
-
+![img_2.png](exportarArquivio2.png)
 
    
 
