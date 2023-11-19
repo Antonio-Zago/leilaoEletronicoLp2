@@ -112,7 +112,18 @@ d. Tipo de produto.
 
 ![img_2.png](buscaProduto.png)
 
+Com lances em dispositivos de informática cadastrados: 
+![image](https://github.com/Antonio-Zago/leilaoEletronicoLp2/assets/80283126/c8b63210-3c72-4591-b638-225ec8aa3510)
+
+
 **Resposta:**
+Ao aplicar o seguinte filtro: 
+![image](https://github.com/Antonio-Zago/leilaoEletronicoLp2/assets/80283126/d2e611a5-8793-4b97-a2cf-e30cbf574ff6)
+
+Obtemos a seguinte resposta:
+
+![image](https://github.com/Antonio-Zago/leilaoEletronicoLp2/assets/80283126/8c410422-850e-4f53-8fb3-e0e51d536a59)
+
 
 
 **5.** Possibilitar a um cliente previamente cadastrado no sistema dar um lance de valor (R$)
@@ -164,6 +175,14 @@ de lances de cada produto (estrutura interna do arquivo será JSON).
 **Resposta:**   
 
 ![img_2.png](exportarArquivio2.png)
+
+O arquivo txt fica salvo dentro da pasta do projeto com nome exportação.txt
+
+![image](https://github.com/Antonio-Zago/leilaoEletronicoLp2/assets/80283126/b02d2794-fe57-434c-acc3-d26b3d92c5c0)
+
+
+
+
 
    
 
