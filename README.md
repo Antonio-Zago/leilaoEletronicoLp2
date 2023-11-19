@@ -77,13 +77,21 @@
 
 **1.** Listagem dos leilões registrados no sistema, ordenados por data de ocorrência;
 
+![img.png](img.png)
+
 **Resposta:**
+
+![img_1.png](img_1.png)
 
 **2.**  Detalhamento de um leilão específico, apresentando seu detalhes (lista de produtos
 ordenado por nome, entidade financeira associada, dados do leilão, quantidade total de
 produtos e demais dados pertinentes ao domínio);
 
+![img_2.png](DetalharLeilaoEspecifico.png)
+
 **Resposta:**
+
+![img_2.png](DetalharLeilaoEspecifico2.png)
 
 **3.** Detalhamento de um produto associado ao leilão, apresentando todos os dados
 pertinentes ao mesmo;
